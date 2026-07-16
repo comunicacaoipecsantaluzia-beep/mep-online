@@ -502,3 +502,110 @@ const nomeArquivo = Date.now()+"-"+nomeLimpo;
 
 
 }
+
+// =========================================
+// LISTAR CURSOS
+// =========================================
+
+async function carregarCursos(){
+
+
+    const listaCursos = document.getElementById("listaCursos");
+
+
+    if(!listaCursos) return;
+
+
+
+    const { data, error } = await supabaseClient
+    .from("cursos")
+    .select("*")
+    .order("criado_em", { ascending:false });
+
+
+
+    if(error){
+
+        console.log("Erro ao buscar cursos:", error);
+
+        return;
+
+    }
+
+
+
+    listaCursos.innerHTML = "";
+
+
+
+    if(data.length === 0){
+
+
+        listaCursos.innerHTML = `
+
+        <div class="curso-vazio">
+
+        Nenhum curso cadastrado.
+
+        </div>
+
+        `;
+
+
+        return;
+
+    }
+
+
+
+
+    data.forEach(curso=>{
+
+
+        listaCursos.innerHTML += `
+
+
+        <div class="card-curso">
+
+
+            <img src="${curso.capa || 'img/logo.png'}">
+
+
+            <div class="info-curso">
+
+
+                <h3>
+                ${curso.nome}
+                </h3>
+
+
+                <span>
+                ${curso.categoria || "Sem categoria"}
+                </span>
+
+
+                <p>
+                ${curso.descricao || ""}
+                </p>
+
+
+            </div>
+
+
+        </div>
+
+
+        `;
+
+
+    });
+
+
+
+}
+
+
+
+// carregar ao abrir página
+
+carregarCursos();
