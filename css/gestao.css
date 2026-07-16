@@ -911,9 +911,9 @@ grid-template-columns:1fr;
 
 #listaCursos .card-curso{
 
-    background:#f2f2f2 !important;
+    background:#e5e5e5 !important;
 
-    border:1px solid #d8d8d8;
+    border:1px solid #cccccc;
 
 }
 
@@ -921,15 +921,24 @@ grid-template-columns:1fr;
 
 #listaCursos .info-curso{
 
-    background:#f2f2f2 !important;
+    background:#e5e5e5 !important;
+
+}
+
+
+#listaCursos .info-curso h3{
+
+    color:#1a1a1a;
 
 }
 
 
 
-#listaCursos .info-curso h3{
+#listaCursos .info-curso span{
 
-    color:#111;
+    background:#222;
+
+    color:#fff;
 
 }
 
@@ -937,6 +946,6 @@ grid-template-columns:1fr;
 
 #listaCursos .info-curso p{
 
-    color:#555;
+    color:#444;
 
 }
