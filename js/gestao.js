@@ -48,6 +48,11 @@ const dashboard = document.getElementById("dashboard");
 const cursos = document.getElementById("cursos");
 const igrejas = document.getElementById("igrejas");
 const relatorios = document.getElementById("relatorios");
+const detalheCurso = document.getElementById("detalheCurso");
+const voltarCursos = document.getElementById("voltarCursos");
+const detalheNome = document.getElementById("detalheNome");
+const detalheDescricao = document.getElementById("detalheDescricao");
+const detalheCapa = document.getElementById("detalheCapa");
 
 
 const tituloPagina = document.getElementById("tituloPagina");
@@ -589,6 +594,26 @@ async function carregarCursos(){
                 ${curso.descricao || ""}
                 </p>
 
+<div class="acoes-curso">
+
+    <button 
+    class="btn-acessar"
+    onclick="abrirCurso('${curso.id}')">
+
+        Acessar Curso
+
+    </button>
+
+
+    <button 
+    class="btn-excluir"
+    onclick="excluirCurso('${curso.id}')">
+
+        Excluir
+
+    </button>
+
+</div>
 
             </div>
 
@@ -615,7 +640,6 @@ carregarCursos();
 // BOTÃO ATUALIZAR
 // =========================================
 
-
 if(btnAtualizar){
 
 
@@ -632,3 +656,104 @@ btnAtualizar.addEventListener("click",async()=>{
 
 
 }
+
+// =========================================
+// ACESSAR CURSO
+// =========================================
+
+function abrirCurso(id){
+
+    console.log("Abrindo curso:", id);
+
+}
+
+// =========================================
+// EXCLUIR CURSO
+// =========================================
+
+async function excluirCurso(id){
+
+
+const confirmar = confirm(
+"Tem certeza que deseja excluir este curso?"
+);
+
+
+if(!confirmar) return;
+
+
+
+const {error} = await supabaseClient
+.from("cursos")
+.delete()
+.eq("id",id);
+
+
+
+if(error){
+
+    console.log(error);
+
+    alert("Erro ao excluir curso");
+
+    return;
+
+}
+
+
+
+alert("Curso excluído com sucesso");
+
+
+carregarCursos();
+
+
+}
+
+// =========================================
+// EXCLUIR CURSO
+// =========================================
+
+
+async function excluirCurso(id){
+
+
+    const confirmar = confirm(
+        "Deseja realmente excluir este curso?"
+    );
+
+
+    if(!confirmar) return;
+
+
+
+    const {error} = await supabaseClient
+
+    .from("cursos")
+
+    .delete()
+
+    .eq("id",id);
+
+
+
+    if(error){
+
+        console.log(error);
+
+        alert("Erro ao excluir curso");
+
+        return;
+
+    }
+
+
+
+    alert("Curso excluído");
+
+
+    carregarCursos();
+
+
+}
+

@@ -974,9 +974,9 @@ grid-template-columns:1fr;
 
     border:none;
 
-    background:#e5e5e5;
+    background:#d60000;
 
-    color:#222;
+    color:white;
 
     font-size:26px;
 
@@ -998,8 +998,76 @@ grid-template-columns:1fr;
 
 .btn-atualizar:hover{
 
-    background:#d0d0d0;
+    background:#b00000;
 
     transform:rotate(180deg);
+
+}
+
+/* BOTÕES DOS CURSOS */
+
+.acoes-curso{
+
+    display:flex;
+
+    gap:10px;
+
+    margin-top:20px;
+
+}
+
+
+
+.btn-acessar{
+
+    flex:1;
+
+    padding:10px;
+
+    border:none;
+
+    border-radius:10px;
+
+    background:#b40000;
+
+    color:white;
+
+    cursor:pointer;
+
+    font-weight:600;
+
+}
+
+
+
+.btn-acessar:hover{
+
+    background:#8d0000;
+
+}
+
+
+
+.btn-excluir{
+
+    padding:10px 15px;
+
+    border:none;
+
+    border-radius:10px;
+
+    background:#222;
+
+    color:white;
+
+    cursor:pointer;
+
+}
+
+
+
+.btn-excluir:hover{
+
+    background:#000;
 
 }
