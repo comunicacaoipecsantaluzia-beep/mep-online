@@ -410,7 +410,14 @@ salvarCurso.addEventListener("click", async()=>{
     if(arquivo){
 
 
-        const nomeArquivo = Date.now()+"-"+arquivo.name;
+const nomeLimpo = arquivo.name
+.replace(/\s+/g, "-")
+.normalize("NFD")
+.replace(/[\u0300-\u036f]/g, "")
+.replace(/[^a-zA-Z0-9.-]/g, "");
+
+
+const nomeArquivo = Date.now()+"-"+nomeLimpo;
 
 
 
