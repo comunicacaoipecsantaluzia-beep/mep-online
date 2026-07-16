@@ -361,13 +361,13 @@ Controle de acessos e downloads.
 </section>
 
 
-<!-- MODAL CURSO -->
+<!-- MODAL CRIAR CURSO -->
 
 <div id="modalCurso" class="modal">
 
     <div class="modal-box">
 
-        <div class="modal-topo">
+        <div class="modal-header">
 
             <h2>Novo Curso</h2>
 
@@ -375,58 +375,109 @@ Controle de acessos e downloads.
 
         </div>
 
-        <div class="campo">
 
-            <label>Nome do Curso</label>
+        <div class="modal-conteudo">
 
-            <input id="cursoNome" type="text">
+
+            <!-- CAPA -->
+
+            <div class="capa-area">
+
+
+                <div class="preview-capa" id="previewCapa">
+
+                    <span>
+                        Prévia da capa
+                    </span>
+
+                </div>
+
+
+                <label class="upload-btn">
+
+                    📁 Selecionar imagem
+
+                    <input 
+                    id="cursoCapa"
+                    type="file"
+                    accept="image/*">
+
+                </label>
+
+
+                <button class="remove-img" id="removerCapa">
+
+                    🗑 Remover imagem
+
+                </button>
+
+
+            </div>
+
+
+
+
+
+            <!-- INFORMAÇÕES -->
+
+            <div class="form-area">
+
+
+                <div class="campo">
+
+                    <label>
+                    Nome do Curso
+                    </label>
+
+                    <input id="cursoNome" type="text">
+
+                </div>
+
+
+
+                <div class="campo">
+
+                    <label>
+                    Categoria
+                    </label>
+
+                    <input id="cursoCategoria" type="text">
+
+                </div>
+
+
+
+                <div class="campo">
+
+                    <label>
+                    Descrição
+                    </label>
+
+                    <textarea id="cursoDescricao"></textarea>
+
+                </div>
+
+
+
+                <div class="acoes">
+
+                    <button id="cancelarCurso">
+                    Cancelar
+                    </button>
+
+
+                    <button id="salvarCurso">
+                    Salvar Curso
+                    </button>
+
+                </div>
+
+
+            </div>
+
 
         </div>
 
-        <div class="campo">
-
-            <label>Descrição</label>
-
-            <textarea id="cursoDescricao"></textarea>
-
-        </div>
-
-        <div class="campo">
-
-            <label>Categoria</label>
-
-            <input id="cursoCategoria" type="text">
-
-        </div>
-
-        <div class="campo">
-
-            <label>Professor</label>
-
-            <input id="cursoProfessor" type="text">
-
-        </div>
-
-        <div class="campo">
-
-            <label>Carga Horária</label>
-
-            <input id="cursoCarga" type="text">
-
-        </div>
-
-        <div class="campo">
-
-            <label>Capa do Curso</label>
-
-            <input id="cursoCapa" type="file" accept="image/*">
-        </div>
-
-        <button id="salvarCurso">
-
-            Salvar Curso
-
-        </button>
 
     </div>
 

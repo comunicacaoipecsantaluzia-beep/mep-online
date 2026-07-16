@@ -180,3 +180,299 @@ window.addEventListener("click",(e)=>{
     }
 
 });
+
+/* MODAL CURSO */
+
+.modal{
+
+    position:fixed;
+    inset:0;
+
+    background:rgba(0,0,0,.75);
+
+    display:none;
+
+    align-items:center;
+    justify-content:center;
+
+    z-index:999;
+
+}
+
+
+.modal-box{
+
+    width:900px;
+
+    background:#181818;
+
+    border-radius:20px;
+
+    padding:30px;
+
+    color:#fff;
+
+}
+
+
+
+.modal-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:25px;
+
+}
+
+
+
+.modal-header h2{
+
+    font-size:24px;
+
+}
+
+
+
+.modal-header button{
+
+    background:none;
+
+    border:none;
+
+    color:white;
+
+    font-size:22px;
+
+    cursor:pointer;
+
+}
+
+
+
+.modal-conteudo{
+
+    display:flex;
+
+    gap:35px;
+
+}
+
+
+
+/* CAPA */
+
+
+.capa-area{
+
+    width:330px;
+
+}
+
+
+
+.preview-capa{
+
+    width:100%;
+
+    aspect-ratio:16/9;
+
+    background:#0f0f0f;
+
+    border:2px dashed #444;
+
+    border-radius:15px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    color:#777;
+
+    overflow:hidden;
+
+    margin-bottom:15px;
+
+}
+
+
+.preview-capa img{
+
+    width:100%;
+
+    height:100%;
+
+    object-fit:cover;
+
+}
+
+
+
+.upload-btn{
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    background:#b30000;
+
+    color:white;
+
+    padding:12px;
+
+    border-radius:10px;
+
+    cursor:pointer;
+
+    margin-bottom:10px;
+
+}
+
+
+
+.upload-btn input{
+
+    display:none;
+
+}
+
+
+
+.remove-img{
+
+    width:100%;
+
+    background:#252525;
+
+    color:white;
+
+    border:1px solid #444;
+
+    padding:12px;
+
+    border-radius:10px;
+
+    cursor:pointer;
+
+}
+
+
+
+
+
+/* FORM */
+
+
+.form-area{
+
+    flex:1;
+
+}
+
+
+
+.campo{
+
+    display:flex;
+
+    flex-direction:column;
+
+    margin-bottom:18px;
+
+}
+
+
+
+.campo label{
+
+    margin-bottom:7px;
+
+    color:#ddd;
+
+}
+
+
+
+.campo input,
+.campo textarea{
+
+
+    background:#101010;
+
+    border:1px solid #444;
+
+    color:white;
+
+    padding:13px;
+
+    border-radius:10px;
+
+    font-size:15px;
+
+}
+
+
+
+.campo textarea{
+
+    height:120px;
+
+    resize:none;
+
+}
+
+
+
+.acoes{
+
+    display:flex;
+
+    justify-content:flex-end;
+
+    gap:15px;
+
+    margin-top:25px;
+
+}
+
+
+
+.acoes button{
+
+    padding:12px 25px;
+
+    border-radius:10px;
+
+    border:none;
+
+    cursor:pointer;
+
+}
+
+
+
+#salvarCurso{
+
+    background:#b30000;
+
+    color:white;
+
+}
+
+
+
+#cancelarCurso{
+
+    background:#333;
+
+    color:white;
+
+}
