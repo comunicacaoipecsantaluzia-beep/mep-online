@@ -21,9 +21,6 @@
 <div class="layout">
 
 
-
-<!-- SIDEBAR -->
-
 <aside class="sidebar">
 
 
@@ -43,34 +40,31 @@
 
 
 
+<nav class="menu">
 
-<nav>
-
-
-<button class="active">
+<button class="active" id="btn-dashboard">
 Dashboard
 </button>
 
 
-<button>
+<button id="btn-cursos">
 Cursos
 </button>
 
 
-<button>
+<button id="btn-materiais">
 Materiais
 </button>
 
 
-<button>
+<button id="btn-igrejas">
 Igrejas
 </button>
 
 
-<button>
+<button id="btn-relatorios">
 Relatórios
 </button>
-
 
 </nav>
 
@@ -83,14 +77,9 @@ Gestão de Ensino
 </div>
 
 
-
 </aside>
 
 
-
-
-
-<!-- CONTEÚDO -->
 
 
 <main class="conteudo">
@@ -104,10 +93,9 @@ Gestão de Ensino
 
 <p>Painel administrativo</p>
 
-<h1>
+<h1 id="tituloPagina">
 Gestão de Ensino
 </h1>
-
 
 </div>
 
@@ -125,8 +113,12 @@ Administrador
 
 
 
-<section class="cards">
+<!-- DASHBOARD -->
 
+<section id="dashboard">
+
+
+<section class="cards">
 
 
 <div class="card">
@@ -203,9 +195,7 @@ Downloads realizados
 </div>
 
 
-
 </section>
-
 
 
 
@@ -215,13 +205,12 @@ Downloads realizados
 
 <div class="titulo">
 
-
 <h2>
 Cursos Recentes
 </h2>
 
 
-<button>
+<button id="irCriarCurso">
 + Novo Curso
 </button>
 
@@ -229,19 +218,33 @@ Cursos Recentes
 </div>
 
 
-
 <div class="vazio">
-
 
 Nenhum curso criado ainda.
 
-
 </div>
 
-<section class="painel cursos-area">
+
+</section>
+
+
+</section>
+
+
+
+
+
+<!-- CURSOS -->
+
+
+<section id="cursos" style="display:none;">
+
+
+<section class="painel">
 
 
 <div class="titulo">
+
 
 <h2>
 Cursos
@@ -249,11 +252,14 @@ Cursos
 
 
 <button id="novoCurso">
-+ Novo Curso
+
++ Criar Curso
+
 </button>
 
 
 </div>
+
 
 
 
@@ -273,8 +279,92 @@ Nenhum curso cadastrado.
 </section>
 
 
+</section>
+
+
+
+
+
+<!-- MATERIAIS -->
+
+
+<section id="materiais" style="display:none;">
+
+
+<section class="painel">
+
+<h2>
+Materiais
+</h2>
+
+
+<p>
+Gerenciamento de materiais dos cursos.
+</p>
+
 
 </section>
+
+
+</section>
+
+
+
+
+
+
+<!-- IGREJAS -->
+
+
+<section id="igrejas" style="display:none;">
+
+
+<section class="painel">
+
+<h2>
+Igrejas
+</h2>
+
+
+<p>
+Igrejas com acesso ao MEP Online.
+</p>
+
+
+</section>
+
+
+</section>
+
+
+
+
+
+
+
+<!-- RELATÓRIOS -->
+
+
+<section id="relatorios" style="display:none;">
+
+
+<section class="painel">
+
+<h2>
+Relatórios
+</h2>
+
+
+<p>
+Controle de acessos e downloads.
+</p>
+
+
+</section>
+
+
+</section>
+
 
 
 
@@ -282,10 +372,12 @@ Nenhum curso cadastrado.
 </main>
 
 
-
 </div>
 
+
+
 <script src="js/gestao.js"></script>
+
 
 </body>
 
