@@ -103,3 +103,5 @@ window.location.href="portal.html";
 
 
 });
+
+console.log("login.js carregado");
