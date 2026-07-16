@@ -473,17 +473,13 @@ salvarCurso.addEventListener("click", async()=>{
 
     if(error){
 
+    console.log("ERRO CURSO:", error);
 
-        console.log(error);
+    alert(error.message);
 
+    return;
 
-        alert("Erro ao criar curso");
-
-
-        return;
-
-
-    }
+}
 
 
 
