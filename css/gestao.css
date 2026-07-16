@@ -383,3 +383,98 @@ grid-template-columns:1fr;
 
 
 }
+
+.modal{
+
+    position:fixed;
+    inset:0;
+
+    background:rgba(0,0,0,.7);
+
+    display:none;
+
+    justify-content:center;
+    align-items:center;
+
+    z-index:999;
+
+}
+
+.modal-box{
+
+    width:650px;
+
+    background:#171717;
+
+    border:1px solid #2b2b2b;
+
+    border-radius:18px;
+
+    padding:30px;
+
+}
+
+.modal-topo{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:25px;
+
+}
+
+.modal-topo button{
+
+    background:none;
+
+    border:none;
+
+    color:#fff;
+
+    font-size:22px;
+
+    cursor:pointer;
+
+}
+
+.modal .campo{
+
+    display:flex;
+
+    flex-direction:column;
+
+    margin-bottom:18px;
+
+}
+
+.modal label{
+
+    margin-bottom:6px;
+
+}
+
+.modal input,
+.modal textarea{
+
+    background:#101010;
+
+    color:#fff;
+
+    border:1px solid #333;
+
+    border-radius:10px;
+
+    padding:12px;
+
+}
+
+.modal textarea{
+
+    resize:none;
+
+    height:120px;
+
+}

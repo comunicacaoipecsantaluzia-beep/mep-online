@@ -200,3 +200,23 @@ if(novoCurso){
 
 
 }
+
+const modal = document.getElementById("modalCurso");
+
+document.getElementById("novoCurso").onclick = ()=>{
+
+    modal.style.display="flex";
+
+};
+
+document.getElementById("irCriarCurso").onclick = ()=>{
+
+    modal.style.display="flex";
+
+};
+
+document.getElementById("fecharModal").onclick = ()=>{
+
+    modal.style.display="none";
+
+};
