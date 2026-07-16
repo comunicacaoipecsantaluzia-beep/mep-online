@@ -950,6 +950,8 @@ grid-template-columns:1fr;
 
 }
 
+/* BOTÃO ATUALIZAR */
+
 .acoes-header{
 
     display:flex;
@@ -964,19 +966,21 @@ grid-template-columns:1fr;
 
 .btn-atualizar{
 
-    width:40px;
+    width:42px;
 
-    height:40px;
+    height:42px;
 
     border-radius:50%;
 
     border:none;
 
-    background:#eeeeee;
+    background:#e5e5e5;
 
     color:#222;
 
-    font-size:24px;
+    font-size:26px;
+
+    font-weight:bold;
 
     cursor:pointer;
 
@@ -986,7 +990,7 @@ grid-template-columns:1fr;
 
     justify-content:center;
 
-    transition:.3s;
+    transition:0.3s ease;
 
 }
 
@@ -994,8 +998,8 @@ grid-template-columns:1fr;
 
 .btn-atualizar:hover{
 
-    transform:rotate(180deg);
+    background:#d0d0d0;
 
-    background:#dddddd;
+    transform:rotate(180deg);
 
 }
