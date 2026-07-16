@@ -1,3 +1,26 @@
+document.addEventListener("DOMContentLoaded", async () => {
+
+    const { data } = await supabaseClient.auth.getUser();
+
+    if (!data.user) {
+        window.location.href = "login.html?tipo=gestao";
+        return;
+    }
+
+    const { data: usuario, error } = await supabaseClient
+        .from("usuarios")
+        .select("tipo_acesso")
+        .eq("auth_id", data.user.id)
+        .single();
+
+    if (error || !usuario || usuario.tipo_acesso !== "gestao") {
+        await supabaseClient.auth.signOut();
+        window.location.href = "login.html?tipo=gestao";
+        return;
+    }
+
+});
+
 // =================================
 // MEP ONLINE - GESTÃO
 // NAVEGAÇÃO
