@@ -949,3 +949,53 @@ grid-template-columns:1fr;
     color:#444;
 
 }
+
+.acoes-header{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+}
+
+
+
+.btn-atualizar{
+
+    width:40px;
+
+    height:40px;
+
+    border-radius:50%;
+
+    border:none;
+
+    background:#eeeeee;
+
+    color:#222;
+
+    font-size:24px;
+
+    cursor:pointer;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    transition:.3s;
+
+}
+
+
+
+.btn-atualizar:hover{
+
+    transform:rotate(180deg);
+
+    background:#dddddd;
+
+}

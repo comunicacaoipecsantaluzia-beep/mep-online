@@ -55,6 +55,7 @@ const tituloPagina = document.getElementById("tituloPagina");
 
 const irCriarCurso = document.getElementById("irCriarCurso");
 const novoCurso = document.getElementById("novoCurso");
+const btnAtualizar = document.getElementById("btnAtualizar");
 
 
 
@@ -609,3 +610,25 @@ async function carregarCursos(){
 // carregar ao abrir página
 
 carregarCursos();
+
+// =========================================
+// BOTÃO ATUALIZAR
+// =========================================
+
+
+if(btnAtualizar){
+
+
+btnAtualizar.addEventListener("click",async()=>{
+
+
+    await carregarCursos();
+
+
+    await carregarDashboard();
+
+
+});
+
+
+}
