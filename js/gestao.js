@@ -49,6 +49,7 @@ const cursos = document.getElementById("cursos");
 const igrejas = document.getElementById("igrejas");
 const relatorios = document.getElementById("relatorios");
 const detalheCurso = document.getElementById("detalheCurso");
+console.log("Detalhe curso:", detalheCurso);
 const voltarCursos = document.getElementById("voltarCursos");
 const detalheNome = document.getElementById("detalheNome");
 const detalheDescricao = document.getElementById("detalheDescricao");
@@ -83,6 +84,8 @@ function abrirPagina(pagina){
 
     relatorios.style.display = "none";
 
+    detalheCurso.style.display = "none";
+
 
     pagina.style.display = "block";
 
@@ -96,8 +99,6 @@ function abrirPagina(pagina){
 
 
 }
-
-
 
 
 // =========================================
