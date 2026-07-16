@@ -1,3 +1,7 @@
+// =========================================
+// VERIFICA LOGIN
+// =========================================
+
 document.addEventListener("DOMContentLoaded", async () => {
 
     const { data } = await supabaseClient.auth.getUser();
@@ -21,50 +25,46 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 });
 
-// =================================
-// MEP ONLINE - GESTÃO
-// NAVEGAÇÃO
-// =================================
 
 
-// BOTÕES MENU
+// =========================================
+// ELEMENTOS
+// =========================================
 
 const btnDashboard = document.getElementById("btn-dashboard");
 const btnCursos = document.getElementById("btn-cursos");
-const btnMateriais = document.getElementById("btn-materiais");
 const btnIgrejas = document.getElementById("btn-igrejas");
 const btnRelatorios = document.getElementById("btn-relatorios");
 
-
-
-// SEÇÕES
-
 const dashboard = document.getElementById("dashboard");
 const cursos = document.getElementById("cursos");
-const materiais = document.getElementById("materiais");
 const igrejas = document.getElementById("igrejas");
 const relatorios = document.getElementById("relatorios");
 
 const tituloPagina = document.getElementById("tituloPagina");
 
+const irCriarCurso = document.getElementById("irCriarCurso");
+const novoCurso = document.getElementById("novoCurso");
+
+const modal = document.getElementById("modalCurso");
+const fecharModal = document.getElementById("fecharModal");
 
 
-// FUNÇÃO PARA TROCAR ABA
+
+// =========================================
+// TROCAR PÁGINA
+// =========================================
 
 function abrirPagina(pagina){
 
     dashboard.style.display = "none";
     cursos.style.display = "none";
-    materiais.style.display = "none";
     igrejas.style.display = "none";
     relatorios.style.display = "none";
 
-
     pagina.style.display = "block";
 
-
-    document.querySelectorAll(".menu button")
-    .forEach(btn => {
+    document.querySelectorAll(".menu button").forEach(btn=>{
 
         btn.classList.remove("active");
 
@@ -74,7 +74,9 @@ function abrirPagina(pagina){
 
 
 
-// DASHBOARD
+// =========================================
+// MENU
+// =========================================
 
 btnDashboard.addEventListener("click",()=>{
 
@@ -87,10 +89,6 @@ btnDashboard.addEventListener("click",()=>{
 });
 
 
-
-
-// CURSOS
-
 btnCursos.addEventListener("click",()=>{
 
     abrirPagina(cursos);
@@ -102,25 +100,6 @@ btnCursos.addEventListener("click",()=>{
 });
 
 
-
-
-// MATERIAIS
-
-btnMateriais.addEventListener("click",()=>{
-
-    abrirPagina(materiais);
-
-    btnMateriais.classList.add("active");
-
-    tituloPagina.innerHTML = "Materiais";
-
-});
-
-
-
-
-// IGREJAS
-
 btnIgrejas.addEventListener("click",()=>{
 
     abrirPagina(igrejas);
@@ -131,10 +110,6 @@ btnIgrejas.addEventListener("click",()=>{
 
 });
 
-
-
-
-// RELATÓRIOS
 
 btnRelatorios.addEventListener("click",()=>{
 
@@ -148,75 +123,60 @@ btnRelatorios.addEventListener("click",()=>{
 
 
 
+// =========================================
+// MODAL CURSO
+// =========================================
 
+function abrirModalCurso(){
 
-// =================================
-// BOTÃO NOVO CURSO NO DASHBOARD
-// =================================
+    modal.style.display = "flex";
 
+}
 
-const irCriarCurso = document.getElementById("irCriarCurso");
+function fecharModalCurso(){
+
+    modal.style.display = "none";
+
+}
 
 
 if(irCriarCurso){
 
     irCriarCurso.addEventListener("click",()=>{
 
-
         abrirPagina(cursos);
-
 
         btnCursos.classList.add("active");
 
-
         tituloPagina.innerHTML = "Cursos";
 
+        abrirModalCurso();
 
     });
 
-
 }
-
-
-
-// =================================
-// BOTÃO CRIAR CURSO
-// =================================
-
-
-const novoCurso = document.getElementById("novoCurso");
 
 
 if(novoCurso){
 
-
-    novoCurso.addEventListener("click",()=>{
-
-
-        alert("Abrir cadastro de curso");
-
-
-    });
-
+    novoCurso.addEventListener("click",abrirModalCurso);
 
 }
 
-const modal = document.getElementById("modalCurso");
 
-document.getElementById("novoCurso").onclick = ()=>{
+if(fecharModal){
 
-    modal.style.display="flex";
+    fecharModal.addEventListener("click",fecharModalCurso);
 
-};
+}
 
-document.getElementById("irCriarCurso").onclick = ()=>{
 
-    modal.style.display="flex";
+window.addEventListener("click",(e)=>{
 
-};
+    if(e.target === modal){
 
-document.getElementById("fecharModal").onclick = ()=>{
+        fecharModalCurso();
 
-    modal.style.display="none";
+    }
 
-};
+});
