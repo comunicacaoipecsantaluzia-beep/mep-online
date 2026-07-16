@@ -274,3 +274,123 @@ if(removerCapa){
 
 }
 
+// =========================================
+// SALVAR CURSO
+// =========================================
+
+const salvarCurso = document.getElementById("salvarCurso");
+
+
+if(salvarCurso){
+
+    salvarCurso.addEventListener("click", async()=>{
+
+
+        const nome = document.getElementById("cursoNome").value;
+
+        const descricao = document.getElementById("cursoDescricao").value;
+
+        const categoria = document.getElementById("cursoCategoria").value;
+
+        const arquivo = inputCapa.files[0];
+
+
+
+        if(!nome){
+
+            alert("Digite o nome do curso");
+
+            return;
+
+        }
+
+
+
+        let capaUrl = null;
+
+
+
+        // UPLOAD DA CAPA
+
+        if(arquivo){
+
+
+            const nomeArquivo = `${Date.now()}-${arquivo.name}`;
+
+
+
+            const { error: uploadError } = await supabaseClient
+            .storage
+            .from("cursos")
+            .upload(nomeArquivo, arquivo);
+
+
+
+            if(uploadError){
+
+                console.log(uploadError);
+
+                alert("Erro ao enviar imagem");
+
+                return;
+
+            }
+
+
+
+            const { data } = supabaseClient
+            .storage
+            .from("cursos")
+            .getPublicUrl(nomeArquivo);
+
+
+
+            capaUrl = data.publicUrl;
+
+
+        }
+
+
+
+        // SALVAR CURSO
+
+
+        const { error } = await supabaseClient
+        .from("cursos")
+        .insert({
+
+            nome:nome,
+
+            descricao:descricao,
+
+            categoria:categoria,
+
+            capa:capaUrl,
+
+            criado_por:(await supabaseClient.auth.getUser()).data.user.id
+
+        });
+
+
+
+        if(error){
+
+            console.log(error);
+
+            alert("Erro ao salvar curso");
+
+            return;
+
+        }
+
+
+
+        alert("Curso criado com sucesso");
+
+
+        fecharModalCurso();
+
+
+    });
+
+}
