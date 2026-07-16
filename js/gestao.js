@@ -46,10 +46,6 @@ const tituloPagina = document.getElementById("tituloPagina");
 const irCriarCurso = document.getElementById("irCriarCurso");
 const novoCurso = document.getElementById("novoCurso");
 
-const modal = document.getElementById("modalCurso");
-const fecharModal = document.getElementById("fecharModal");
-
-
 
 // =========================================
 // TROCAR PÁGINA
