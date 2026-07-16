@@ -1,0 +1,295 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Inter', sans-serif;
+}
+
+
+body{
+
+    min-height:100vh;
+
+    background:
+    radial-gradient(circle at top right,#d00000 0%,transparent 25%),
+    linear-gradient(135deg,#050505,#171717);
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    overflow:hidden;
+
+}
+
+
+
+.login-container{
+
+    width:100%;
+    min-height:100vh;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    padding:30px;
+
+}
+
+
+
+.login-card{
+
+    width:100%;
+    max-width:850px;
+
+    text-align:center;
+
+    color:white;
+
+}
+
+
+
+.logo{
+
+    width:220px;
+    height:auto;
+
+    aspect-ratio:16 / 9;
+
+    object-fit:contain;
+
+    margin-bottom:35px;
+
+    filter:drop-shadow(0 10px 25px rgba(0,0,0,.5));
+
+}
+
+
+
+h1{
+
+    font-size:46px;
+
+    font-weight:900;
+
+    letter-spacing:-1px;
+
+    margin-bottom:20px;
+
+}
+
+
+
+.texto{
+
+    max-width:620px;
+
+    margin:0 auto 45px;
+
+    color:#cfcfcf;
+
+    font-size:17px;
+
+    line-height:1.7;
+
+}
+
+
+
+.opcoes{
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:25px;
+
+}
+
+
+
+.opcao{
+
+    width:300px;
+
+    padding:30px;
+
+    background:rgba(255,255,255,.08);
+
+    backdrop-filter:blur(15px);
+
+    border:1px solid rgba(255,255,255,.15);
+
+    border-radius:22px;
+
+    text-decoration:none;
+
+    color:white;
+
+    transition:.35s;
+
+    position:relative;
+
+    overflow:hidden;
+
+}
+
+
+
+.opcao::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:0;
+    left:0;
+
+    width:100%;
+    height:4px;
+
+    background:#d00000;
+
+}
+
+
+
+.opcao:hover{
+
+    transform:translateY(-8px);
+
+    background:#d00000;
+
+    border-color:#d00000;
+
+}
+
+
+
+.opcao h2{
+
+    font-size:22px;
+
+    font-weight:800;
+
+    margin-bottom:12px;
+
+}
+
+
+
+.opcao p{
+
+    color:#ccc;
+
+    font-size:14px;
+
+}
+
+
+
+.opcao:hover p{
+
+    color:white;
+
+}
+
+
+
+
+@media(max-width:700px){
+
+
+.login-card{
+
+    max-width:100%;
+
+}
+
+
+h1{
+
+    font-size:34px;
+
+}
+
+
+.opcoes{
+
+    flex-direction:column;
+
+    align-items:center;
+
+}
+
+
+.opcao{
+
+    width:100%;
+
+}
+
+
+}
+
+.faixa-final{
+
+    position:fixed;
+
+    bottom:0;
+
+    left:0;
+
+    width:100%;
+
+    background:#d00000;
+
+    color:white;
+
+    overflow:hidden;
+
+    padding:14px 0;
+
+    font-weight:800;
+
+    letter-spacing:2px;
+
+    font-size:14px;
+
+}
+
+
+
+.texto-passando{
+
+    display:inline-block;
+
+    white-space:nowrap;
+
+    animation: passar 30s linear infinite;
+
+}
+
+
+
+@keyframes passar{
+
+
+from{
+
+    transform:translateX(100%);
+
+}
+
+
+to{
+
+    transform:translateX(-100%);
+
+}
+
+
+}
