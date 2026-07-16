@@ -906,3 +906,37 @@ grid-template-columns:1fr;
     border-radius:15px;
 
 }
+
+/* AJUSTE FUNDO DOS CARDS DE CURSO */
+
+#listaCursos .card-curso{
+
+    background:#f2f2f2 !important;
+
+    border:1px solid #d8d8d8;
+
+}
+
+
+
+#listaCursos .info-curso{
+
+    background:#f2f2f2 !important;
+
+}
+
+
+
+#listaCursos .info-curso h3{
+
+    color:#111;
+
+}
+
+
+
+#listaCursos .info-curso p{
+
+    color:#555;
+
+}
