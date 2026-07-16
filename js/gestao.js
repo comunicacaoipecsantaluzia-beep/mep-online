@@ -423,13 +423,13 @@ salvarCurso.addEventListener("click", async()=>{
 
         if(uploadError){
 
-            console.log(uploadError);
+    console.log("ERRO UPLOAD:", uploadError);
 
-            alert("Erro no upload da imagem");
+    alert(uploadError.message);
 
-            return;
+    return;
 
-        }
+}
 
 
 
