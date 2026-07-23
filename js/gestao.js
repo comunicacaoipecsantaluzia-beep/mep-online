@@ -1317,14 +1317,16 @@ await supabaseClient
 
 if(erroIgreja){
 
-    console.log(erroIgreja);
+    console.log("ERRO COMPLETO:", erroIgreja);
 
-    alert(erroIgreja.message);
+    alert(
+        erroIgreja.message + "\n\n" +
+        erroIgreja.details
+    );
 
     return;
 
 }
-
 
 
 // Criar usuário da igreja
@@ -1517,7 +1519,7 @@ async function excluirIgreja(id){
 
 
     const confirmar = confirm(
-        "Tem certeza que deseja excluir esta igreja? Todos os acessos serão removidos."
+        "Deseja excluir essa igreja e todos os acessos vinculados?"
     );
 
 
@@ -1525,44 +1527,18 @@ async function excluirIgreja(id){
 
 
 
-    // Remove usuários vinculados
-
-    const {error: erroUsuarios} =
-    await supabaseClient
-    .from("usuarios")
-    .delete()
-    .eq("igreja_id", id);
-
-
-
-    if(erroUsuarios){
-
-        console.log(erroUsuarios);
-
-        alert("Erro ao remover usuários.");
-
-        return;
-
-    }
-
-
-
-
-    // Remove igreja
-
-    const {error: erroIgreja} =
-    await supabaseClient
+    const {error} = await supabaseClient
     .from("igrejas")
     .delete()
     .eq("id", id);
 
 
 
-    if(erroIgreja){
+    if(error){
 
-        console.log(erroIgreja);
+        console.log(error);
 
-        alert("Erro ao excluir igreja.");
+        alert(error.message);
 
         return;
 
@@ -1570,8 +1546,7 @@ async function excluirIgreja(id){
 
 
 
-    alert("Igreja removida com sucesso!");
-
+    alert("Igreja excluída com sucesso!");
 
 
     carregarIgrejas();
