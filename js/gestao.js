@@ -991,26 +991,24 @@ salvarMaterial.addEventListener("click", async()=>{
 
         // UPLOAD STORAGE
 
-        const { data: uploadData, error: uploadError } =
+       console.log("Bucket utilizado:", "materiais");
 
-        await supabaseClient.storage
 
-        .from("materiais")
+const { data: uploadData, error: uploadError } =
 
-        .upload(
+await supabaseClient
 
-            nomeArquivo,
+.storage
 
-            arquivo,
+.from("materiais")
 
-            {
-
-                upsert:false
-
-            }
-
-        );
-
+.upload(
+    nomeArquivo,
+    arquivo,
+    {
+        upsert:false
+    }
+);
 
 
         if(uploadError){
