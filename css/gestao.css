@@ -1735,3 +1735,120 @@ MODAL MATERIAIS
     font-size:13px;
 
 }
+
+/* =========================================
+   CARDS DE IGREJAS
+========================================= */
+
+
+#listaIgrejas{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+
+    gap:20px;
+
+    margin-top:25px;
+
+}
+
+
+
+.card-igreja{
+
+    background:#1b1b1b;
+
+    border:1px solid #333;
+
+    border-radius:16px;
+
+    overflow:hidden;
+
+    transition:.25s;
+
+    cursor:pointer;
+
+}
+
+
+
+.card-igreja:hover{
+
+    transform:translateY(-5px);
+
+    border-color:#e30613;
+
+}
+
+
+
+.imagem-igreja{
+
+    width:100%;
+
+    height:140px;
+
+    background:#111;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+}
+
+
+
+.imagem-igreja img{
+
+    width:100%;
+
+    height:100%;
+
+    object-fit:cover;
+
+}
+
+
+
+.info-igreja{
+
+    padding:18px;
+
+}
+
+
+
+.info-igreja h3{
+
+    margin:0 0 8px;
+
+    color:#fff;
+
+    font-size:20px;
+
+}
+
+
+
+.info-igreja p{
+
+    color:#e30613;
+
+    font-weight:600;
+
+    margin:5px 0;
+
+}
+
+
+
+.info-igreja span{
+
+    color:#aaa;
+
+    font-size:14px;
+
+}

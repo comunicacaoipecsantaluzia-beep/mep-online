@@ -1271,43 +1271,117 @@ if(salvarIgreja){
 
 
 
-        const {error} = 
-        await supabaseClient
-        .from("igrejas")
-        .insert({
+       // =========================================
+// CRIAR IGREJA
+// =========================================
 
 
-            nome:nome,
-
-            sigla:sigla,
-
-            cidade:cidade,
-
-            imagem:imagemUrl,
-
-            email:email
-
-
-        });
+const senha = document
+.getElementById("igrejaSenha")
+.value.trim();
 
 
 
-        if(error){
+if(senha === ""){
 
+    alert("Digite uma senha inicial.");
 
-            console.log(error);
+    return;
 
-            alert(error.message);
-
-            return;
-
-
-        }
+}
 
 
 
+// Criar igreja primeiro
 
-        alert("IPEC cadastrada com sucesso!");
+const {data: novaIgreja, error: erroIgreja} = 
+await supabaseClient
+.from("igrejas")
+.insert({
+
+    nome:nome,
+
+    sigla:sigla,
+
+    cidade:cidade,
+
+    imagem:imagemUrl,
+
+    email:email
+
+})
+.select()
+.single();
+
+
+
+if(erroIgreja){
+
+    console.log(erroIgreja);
+
+    alert(erroIgreja.message);
+
+    return;
+
+}
+
+
+
+// Criar usuário da igreja
+
+const {data:usuarioCriado, error:erroUsuario} =
+await supabaseClient.auth.signUp({
+
+    email:email,
+
+    password:senha
+
+});
+
+
+
+if(erroUsuario){
+
+    console.log(erroUsuario);
+
+    alert(erroUsuario.message);
+
+    return;
+
+}
+
+
+
+// Salvar vínculo na tabela usuarios
+
+const {error:erroTabelaUsuario} =
+await supabaseClient
+.from("usuarios")
+.insert({
+
+    auth_id:usuarioCriado.user.id,
+
+    nome:nome,
+
+    email:email,
+
+    tipo_acesso:"igreja",
+
+    igreja_id:novaIgreja.id
+
+});
+
+
+
+if(erroTabelaUsuario){
+
+    console.log(erroTabelaUsuario);
+
+    alert(erroTabelaUsuario.message);
+
+    return;
+
+}
 
 
 
