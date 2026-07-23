@@ -338,7 +338,53 @@ if(cancelarMaterial){
 
 }
 
+// =========================================
+// PREVIEW DO MATERIAL
+// =========================================
 
+if(arquivoMaterial){
+
+    arquivoMaterial.addEventListener("change",(e)=>{
+
+        const arquivo = e.target.files[0];
+
+        if(!arquivo){
+
+            previewMaterial.innerHTML = "Nenhum arquivo selecionado.";
+
+            return;
+
+        }
+
+        const tamanho = (arquivo.size / 1024 / 1024).toFixed(2);
+
+        previewMaterial.innerHTML = `
+
+            <div class="icone">📄</div>
+
+            <div class="info">
+
+                <div class="nome">
+
+                    ${arquivo.name}
+
+                </div>
+
+                <div class="dados">
+
+                    ${(arquivo.type || "Arquivo")} • ${tamanho} MB
+
+                </div>
+
+            </div>
+
+        `;
+
+        previewMaterial.classList.add("arquivo");
+
+    });
+
+}
 
 
 
