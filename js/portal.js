@@ -1,62 +1,136 @@
-document.addEventListener("DOMContentLoaded", async()=>{
+// =========================================
+// VERIFICA LOGIN IGREJA
+// =========================================
+
+document.addEventListener("DOMContentLoaded", async () => {
 
 
-    console.log("PORTAL INICIOU");
-
-
-    const {data:sessionData} = await supabaseClient.auth.getSession();
-
-
-    console.log("SESSÃO:", sessionData.session);
+    const { data } = await supabaseClient.auth.getUser();
 
 
 
-    if(!sessionData.session){
+    if (!data.user) {
 
-        console.log("SEM SESSÃO");
 
-        window.location.href="login.html?tipo=igreja";
+        window.location.href = "login.html?tipo=igreja";
+
 
         return;
+
 
     }
 
 
 
-    const user = sessionData.session.user;
 
 
-
-    console.log("AUTH USER:", user);
-
-
-
-    const {data:usuario,error} =
-    await supabaseClient
+    const { data: usuario, error } = await supabaseClient
     .from("usuarios")
     .select("*")
-    .eq("auth_id",user.id)
+    .eq("auth_id", data.user.id)
     .single();
 
 
 
-    console.log("USUARIO TABELA:", usuario);
-
-    console.log("ERRO USUARIO:", error);
 
 
+    if(error || !usuario || usuario.tipo_acesso !== "igreja"){
 
-    if(error || !usuario){
 
-        alert("Não achou usuário na tabela usuarios");
+
+        await supabaseClient.auth.signOut();
+
+
+
+        window.location.href = "login.html?tipo=igreja";
+
+
 
         return;
+
+
 
     }
 
 
 
-    console.log("TIPO ACESSO:", usuario.tipo_acesso);
+
+
+    console.log("Usuário igreja:", usuario);
+
+
+
+
+
+    // =========================================
+    // BUSCAR IGREJA VINCULADA
+    // =========================================
+
+
+    const { data: igreja, error: erroIgreja } = 
+    await supabaseClient
+    .from("igrejas")
+    .select("*")
+    .eq("id", usuario.igreja_id)
+    .single();
+
+
+
+
+
+    if(erroIgreja || !igreja){
+
+
+
+        console.log("Erro igreja:", erroIgreja);
+
+
+
+        alert("Igreja não encontrada.");
+
+
+
+        return;
+
+
+
+    }
+
+
+
+
+
+    console.log("Igreja atual:", igreja);
+
+
+
+
+
+    // =========================================
+    // MOSTRAR NOME DA IGREJA
+    // =========================================
+
+
+    const nomeIgreja = document.getElementById("nomeIgreja");
+
+
+
+    if(nomeIgreja){
+
+
+        nomeIgreja.innerHTML = igreja.nome;
+
+
+    }
+
+
+
+
+
+    // =========================================
+    // AQUI ENTRARÁ A BUSCA DOS CURSOS
+    // LIBERADOS PARA ESSA IGREJA
+    // =========================================
 
 
 
