@@ -41,6 +41,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 const btnDashboard = document.getElementById("btn-dashboard");
 const btnCursos = document.getElementById("btn-cursos");
 const btnIgrejas = document.getElementById("btn-igrejas");
+const listaIgrejas = document.getElementById("listaIgrejas");
+const btnAtualizarIgrejas = document.getElementById("btnAtualizarIgrejas");
 const btnRelatorios = document.getElementById("btn-relatorios");
 const dashboard = document.getElementById("dashboard");
 const cursos = document.getElementById("cursos");
@@ -163,24 +165,25 @@ btnCursos.addEventListener("click",()=>{
 
 if(btnIgrejas){
 
-btnIgrejas.addEventListener("click",()=>{
+    btnIgrejas.addEventListener("click",()=>{
 
 
-    abrirPagina(igrejas);
+        abrirPagina(igrejas);
 
 
-    btnIgrejas.classList.add("active");
+        btnIgrejas.classList.add("active");
 
 
-    tituloPagina.innerHTML = "Igrejas";
+        tituloPagina.innerHTML = "Igrejas";
 
 
-});
+        carregarIgrejas();
+
+
+    });
 
 
 }
-
-
 
 
 if(btnRelatorios){
@@ -1182,69 +1185,33 @@ await supabaseClient
 if(salvarIgreja){
 
 
-salvarIgreja.addEventListener("click", async()=>{
+    salvarIgreja.addEventListener("click", async()=>{
 
 
-    const nome = document
-    .getElementById("igrejaNome")
-    .value.trim();
+        const nome = document
+        .getElementById("igrejaNome")
+        .value.trim();
 
 
-    const sigla = document
-    .getElementById("igrejaSigla")
-    .value.trim();
+        const sigla = document
+        .getElementById("igrejaSigla")
+        .value.trim();
 
 
-    const cidade = document
-    .getElementById("igrejaCidade")
-    .value.trim();
+        const cidade = document
+        .getElementById("igrejaCidade")
+        .value.trim();
 
 
-    const email = document
-    .getElementById("igrejaEmail")
-    .value.trim();
-
-
-
-    if(nome === ""){
-
-        alert("Digite o nome da IPEC");
-
-        return;
-
-    }
+        const email = document
+        .getElementById("igrejaEmail")
+        .value.trim();
 
 
 
-    let imagemUrl = null;
+        if(nome === ""){
 
-
-    const imagem = igrejaImagem.files[0];
-
-
-
-    if(imagem){
-
-
-        const nomeArquivo =
-        Date.now()+"-"+imagem.name;
-
-
-
-        const {error:uploadError} =
-        await supabaseClient.storage
-
-        .from("igrejas")
-
-        .upload(nomeArquivo, imagem);
-
-
-
-        if(uploadError){
-
-            console.log(uploadError);
-
-            alert(uploadError.message);
+            alert("Digite o nome da IPEC");
 
             return;
 
@@ -1252,50 +1219,146 @@ salvarIgreja.addEventListener("click", async()=>{
 
 
 
-        const url =
-        supabaseClient.storage
+        let imagemUrl = null;
 
+
+        const imagem = igrejaImagem.files[0];
+
+
+
+        if(imagem){
+
+
+            const nomeArquivo = 
+            Date.now()+"-"+imagem.name;
+
+
+
+            const {error:uploadError} = 
+            await supabaseClient
+            .storage
+            .from("igrejas")
+            .upload(nomeArquivo, imagem);
+
+
+
+            if(uploadError){
+
+                console.log(uploadError);
+
+                alert(uploadError.message);
+
+                return;
+
+            }
+
+
+
+            const url = 
+            supabaseClient
+            .storage
+            .from("igrejas")
+            .getPublicUrl(nomeArquivo);
+
+
+
+            imagemUrl = url.data.publicUrl;
+
+
+        }
+
+
+
+
+
+        const {error} = 
+        await supabaseClient
         .from("igrejas")
-
-        .getPublicUrl(nomeArquivo);
-
+        .insert({
 
 
-        imagemUrl = url.data.publicUrl;
+            nome:nome,
+
+            sigla:sigla,
+
+            cidade:cidade,
+
+            imagem:imagemUrl,
+
+            email:email
 
 
-    }
+        });
 
 
 
-    const {error} =
-    await supabaseClient
-
-    .from("igrejas")
-
-    .insert({
+        if(error){
 
 
-        nome:nome,
+            console.log(error);
 
-        sigla:sigla,
+            alert(error.message);
 
-        cidade:cidade,
+            return;
 
-        imagem:imagemUrl,
 
-        email:email
+        }
+
+
+
+
+        alert("IPEC cadastrada com sucesso!");
+
+
+
+        fecharModalIgreja();
+
+
+
+        carregarIgrejas();
+
 
 
     });
 
 
+}
+
+
+
+
+
+// =========================================
+// CARREGAR IGREJAS
+// =========================================
+
+async function carregarIgrejas(){
+
+
+    if(!listaIgrejas) return;
+
+
+
+    const { data, error } = await supabaseClient
+    .from("igrejas")
+    .select("*")
+    .order("criado_em", { ascending:false });
+
+
 
     if(error){
 
-        console.log(error);
+        console.log("Erro ao buscar igrejas:", error);
 
-        alert(error.message);
+        listaIgrejas.innerHTML = `
+
+            <div class="curso-vazio">
+
+                Erro ao carregar igrejas.
+
+            </div>
+
+        `;
 
         return;
 
@@ -1303,15 +1366,90 @@ salvarIgreja.addEventListener("click", async()=>{
 
 
 
-    alert("IPEC cadastrada com sucesso!");
+    listaIgrejas.innerHTML = "";
 
 
-    fecharModalIgreja();
+
+    if(!data || data.length === 0){
 
 
-    carregarIgrejas();
+        listaIgrejas.innerHTML = `
+
+            <div class="curso-vazio">
+
+                Nenhuma igreja cadastrada.
+
+            </div>
+
+        `;
 
 
-});
+        return;
+
+    }
+
+
+
+    data.forEach(igreja=>{
+
+
+        listaIgrejas.innerHTML += `
+
+
+        <div class="card-igreja">
+
+
+
+            <div class="imagem-igreja">
+
+
+                <img src="${igreja.imagem || 'img/logo.png'}">
+
+
+            </div>
+
+
+
+
+            <div class="info-igreja">
+
+
+                <h3>
+
+                    ${igreja.nome}
+
+                </h3>
+
+
+
+                <p>
+
+                    ${igreja.sigla || ""}
+
+                </p>
+
+
+
+                <span>
+
+                    ${igreja.cidade || "Cidade não informada"}
+
+                </span>
+
+
+            </div>
+
+
+
+        </div>
+
+
+
+        `;
+
+
+    });
+
+
 
 }

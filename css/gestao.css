@@ -1683,3 +1683,55 @@ MODAL MATERIAIS
     background:#000;
 
 }
+
+.card-igreja{
+
+    background:#242424;
+
+    border-radius:15px;
+
+    padding:20px;
+
+    margin-bottom:15px;
+
+    border:1px solid #333;
+
+}
+
+
+
+.card-igreja h3{
+
+    color:white;
+
+    margin-bottom:8px;
+
+}
+
+
+
+.card-igreja p{
+
+    color:#aaa;
+
+}
+
+
+
+.card-igreja span{
+
+    display:inline-block;
+
+    margin-top:10px;
+
+    background:#b40000;
+
+    color:white;
+
+    padding:5px 12px;
+
+    border-radius:20px;
+
+    font-size:13px;
+
+}
