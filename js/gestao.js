@@ -1467,63 +1467,114 @@ async function carregarIgrejas(){
     data.forEach(igreja=>{
 
 
-        listaIgrejas.innerHTML += `
+       listaIgrejas.innerHTML += `
 
 
-        <div class="card-igreja">
+<div class="card-igreja">
 
 
-
-            <div class="imagem-igreja">
-
-
-                <img src="${igreja.imagem || 'img/logo.png'}">
+    <h3>
+        ${igreja.nome}
+    </h3>
 
 
-            </div>
+    <p>
+        ${igreja.cidade || "Cidade não informada"}
+    </p>
 
 
+    <span>
+        ${status}
+    </span>
 
 
-            <div class="info-igreja">
+    <button 
+    class="btn-excluir-igreja"
+    onclick="excluirIgreja('${igreja.id}')">
+
+        Excluir
+
+    </button>
 
 
-                <h3>
-
-                    ${igreja.nome}
-
-                </h3>
+</div>
 
 
-
-                <p>
-
-                    ${igreja.sigla || ""}
-
-                </p>
-
-
-
-                <span>
-
-                    ${igreja.cidade || "Cidade não informada"}
-
-                </span>
-
-
-            </div>
-
-
-
-        </div>
-
-
-
-        `;
+`;
 
 
     });
 
+
+
+}
+
+// =========================================
+// EXCLUIR IGREJA
+// =========================================
+
+async function excluirIgreja(id){
+
+
+    const confirmar = confirm(
+        "Tem certeza que deseja excluir esta igreja? Todos os acessos serão removidos."
+    );
+
+
+    if(!confirmar) return;
+
+
+
+    // Remove usuários vinculados
+
+    const {error: erroUsuarios} =
+    await supabaseClient
+    .from("usuarios")
+    .delete()
+    .eq("igreja_id", id);
+
+
+
+    if(erroUsuarios){
+
+        console.log(erroUsuarios);
+
+        alert("Erro ao remover usuários.");
+
+        return;
+
+    }
+
+
+
+
+    // Remove igreja
+
+    const {error: erroIgreja} =
+    await supabaseClient
+    .from("igrejas")
+    .delete()
+    .eq("id", id);
+
+
+
+    if(erroIgreja){
+
+        console.log(erroIgreja);
+
+        alert("Erro ao excluir igreja.");
+
+        return;
+
+    }
+
+
+
+    alert("Igreja removida com sucesso!");
+
+
+
+    carregarIgrejas();
 
 
 }

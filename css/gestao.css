@@ -1852,3 +1852,32 @@ MODAL MATERIAIS
     font-size:14px;
 
 }
+
+.btn-excluir-igreja{
+
+    margin-top:15px;
+
+    width:100%;
+
+    padding:10px;
+
+    background:#e30613;
+
+    color:white;
+
+    border:none;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+    font-weight:700;
+
+}
+
+
+.btn-excluir-igreja:hover{
+
+    background:#b8000d;
+
+}
