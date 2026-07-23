@@ -905,3 +905,135 @@ if(voltarCursos){
 
 }
 
+// =========================================
+// SALVAR MATERIAL
+// =========================================
+
+if(salvarMaterial){
+
+salvarMaterial.addEventListener("click", async()=>{
+
+    if(!cursoAtual){
+
+        alert("Nenhum curso selecionado.");
+
+        return;
+
+    }
+
+    if(arquivosSelecionados.length === 0){
+
+        alert("Selecione pelo menos um arquivo.");
+
+        return;
+
+    }
+
+    const nomeMaterial = document
+    .getElementById("materialNome")
+    .value.trim();
+
+    const descricao = document
+    .getElementById("materialDescricao")
+    .value.trim();
+
+    if(nomeMaterial == ""){
+
+        alert("Digite o nome do material.");
+
+        return;
+
+    }
+
+    for(const arquivo of arquivosSelecionados){
+
+        const nomeLimpo = arquivo.name
+        .replace(/\s+/g,"-")
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g,"")
+        .replace(/[^a-zA-Z0-9.-]/g,"");
+
+        const nomeArquivo =
+        Date.now()+"-"+nomeLimpo;
+
+        // Upload
+
+        const { error:uploadError } =
+        await supabaseClient.storage
+
+        .from("materiais")
+
+        .upload(nomeArquivo,arquivo);
+
+        if(uploadError){
+
+            console.log(uploadError);
+
+            alert(uploadError.message);
+
+            return;
+
+        }
+
+        const url = supabaseClient.storage
+
+        .from("materiais")
+
+        .getPublicUrl(nomeArquivo);
+
+        const usuario =
+        await supabaseClient.auth.getUser();
+
+        const { error } =
+        await supabaseClient
+
+        .from("materiais")
+
+        .insert({
+
+            curso_id:cursoAtual.id,
+
+            nome:nomeMaterial,
+
+            descricao:descricao,
+
+            arquivo:url.data.publicUrl,
+
+            tipo:arquivo.type,
+
+            tamanho:arquivo.size,
+
+            criado_por:usuario.data.user.id
+
+        });
+
+        if(error){
+
+            console.log(error);
+
+            alert(error.message);
+
+            return;
+
+        }
+
+    }
+
+    alert("Material enviado com sucesso!");
+
+    arquivosSelecionados = [];
+
+    atualizarPreviewMateriais();
+
+    document.getElementById("materialNome").value="";
+
+    document.getElementById("materialDescricao").value="";
+
+    fecharModalMaterial();
+
+    carregarMateriais();
+
+});
+
+}
+
