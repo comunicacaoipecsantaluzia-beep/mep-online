@@ -909,9 +909,14 @@ if(voltarCursos){
 // SALVAR MATERIAL
 // =========================================
 
+// =========================================
+// SALVAR MATERIAL
+// =========================================
+
 if(salvarMaterial){
 
 salvarMaterial.addEventListener("click", async()=>{
+
 
     if(!cursoAtual){
 
@@ -921,6 +926,8 @@ salvarMaterial.addEventListener("click", async()=>{
 
     }
 
+
+
     if(arquivosSelecionados.length === 0){
 
         alert("Selecione pelo menos um arquivo.");
@@ -929,15 +936,21 @@ salvarMaterial.addEventListener("click", async()=>{
 
     }
 
+
+
     const nomeMaterial = document
     .getElementById("materialNome")
     .value.trim();
+
+
 
     const descricao = document
     .getElementById("materialDescricao")
     .value.trim();
 
-    if(nomeMaterial == ""){
+
+
+    if(nomeMaterial === ""){
 
         alert("Digite o nome do material.");
 
@@ -945,37 +958,84 @@ salvarMaterial.addEventListener("click", async()=>{
 
     }
 
+
+
+    const usuario = await supabaseClient.auth.getUser();
+
+
+
     for(const arquivo of arquivosSelecionados){
 
+
+
         const nomeLimpo = arquivo.name
+
         .replace(/\s+/g,"-")
+
         .normalize("NFD")
+
         .replace(/[\u0300-\u036f]/g,"")
+
         .replace(/[^a-zA-Z0-9.-]/g,"");
 
-        const nomeArquivo =
-        Date.now()+"-"+nomeLimpo;
 
-        // Upload
 
-        const { error:uploadError } =
+        const nomeArquivo = 
+        `${cursoAtual.id}/${Date.now()}-${nomeLimpo}`;
+
+
+
+        console.log("Enviando arquivo:", nomeArquivo);
+
+
+
+        // UPLOAD STORAGE
+
+        const { data: uploadData, error: uploadError } =
+
         await supabaseClient.storage
-
-console.log("Bucket utilizado:", "materiais");
 
         .from("materiais")
 
-        .upload(nomeArquivo,arquivo);
+        .upload(
+
+            nomeArquivo,
+
+            arquivo,
+
+            {
+
+                upsert:false
+
+            }
+
+        );
+
+
 
         if(uploadError){
 
-            console.log(uploadError);
+
+            console.log("ERRO UPLOAD:", uploadError);
+
 
             alert(uploadError.message);
 
+
             return;
 
+
         }
+
+
+
+        console.log("Upload concluído:", uploadData);
+
+
+
+
+        // PEGAR URL PÚBLICA
+
 
         const url = supabaseClient.storage
 
@@ -983,59 +1043,93 @@ console.log("Bucket utilizado:", "materiais");
 
         .getPublicUrl(nomeArquivo);
 
-        const usuario =
-        await supabaseClient.auth.getUser();
 
-        const { error } =
-        await supabaseClient
+
+
+        // SALVAR NO BANCO
+
+
+
+        const { error } = await supabaseClient
 
         .from("materiais")
 
         .insert({
 
-            curso_id:cursoAtual.id,
 
-            nome:nomeMaterial,
+            curso_id: cursoAtual.id,
 
-            descricao:descricao,
 
-            arquivo:url.data.publicUrl,
+            nome: nomeMaterial,
 
-            tipo:arquivo.type,
 
-            tamanho:arquivo.size,
+            descricao: descricao,
 
-            criado_por:usuario.data.user.id
+
+            arquivo: url.data.publicUrl,
+
+
+            tipo: arquivo.type,
+
+
+            tamanho: arquivo.size,
+
+
+            criado_por: usuario.data.user.id
+
 
         });
 
+
+
+
+
         if(error){
 
-            console.log(error);
+
+            console.log("ERRO BANCO:", error);
+
 
             alert(error.message);
 
+
             return;
+
 
         }
 
+
     }
+
+
 
     alert("Material enviado com sucesso!");
 
+
+
     arquivosSelecionados = [];
+
+
 
     atualizarPreviewMateriais();
 
-    document.getElementById("materialNome").value="";
 
-    document.getElementById("materialDescricao").value="";
+
+    document.getElementById("materialNome").value = "";
+
+    document.getElementById("materialDescricao").value = "";
+
+
 
     fecharModalMaterial();
 
+
+
     carregarMateriais();
+
+
 
 });
 
-}
 
+}
