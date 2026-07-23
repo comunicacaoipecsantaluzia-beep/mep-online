@@ -1336,3 +1336,93 @@ MODAL MATERIAIS
     font-size:13px;
 
 }
+
+/* =========================================
+   LISTA DE ARQUIVOS
+========================================= */
+
+#previewMaterial{
+
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+
+    margin-top:20px;
+
+}
+
+
+.arquivo-item{
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    padding:14px 18px;
+
+    background:#2b2b2b;
+
+    border:1px solid #3d3d3d;
+
+    border-radius:12px;
+
+    transition:.2s;
+
+}
+
+.arquivo-item:hover{
+
+    border-color:#e30613;
+
+    background:#323232;
+
+}
+
+.arquivo-item strong{
+
+    color:#ffffff;
+
+    font-size:15px;
+
+    font-weight:600;
+
+}
+
+.arquivo-item small{
+
+    color:#9d9d9d;
+
+    font-size:13px;
+
+}
+
+.remover-arquivo{
+
+    width:36px;
+    height:36px;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:#e30613;
+
+    color:#fff;
+
+    cursor:pointer;
+
+    font-size:18px;
+
+    font-weight:bold;
+
+    transition:.25s;
+
+}
+
+.remover-arquivo:hover{
+
+    transform:scale(1.08);
+
+    background:#ff1d2d;
+
+}
