@@ -1185,33 +1185,76 @@ await supabaseClient
 if(salvarIgreja){
 
 
-    salvarIgreja.addEventListener("click", async()=>{
+salvarIgreja.addEventListener("click", async()=>{
 
 
-        const nome = document
-        .getElementById("igrejaNome")
-        .value.trim();
+    const nome = document
+    .getElementById("igrejaNome")
+    .value.trim();
 
 
-        const sigla = document
-        .getElementById("igrejaSigla")
-        .value.trim();
+    const sigla = document
+    .getElementById("igrejaSigla")
+    .value.trim();
 
 
-        const cidade = document
-        .getElementById("igrejaCidade")
-        .value.trim();
+    const cidade = document
+    .getElementById("igrejaCidade")
+    .value.trim();
 
 
-        const email = document
-        .getElementById("igrejaEmail")
-        .value.trim();
+    const email = document
+    .getElementById("igrejaEmail")
+    .value.trim();
+
+
+    const senha = document
+    .getElementById("igrejaSenha")
+    .value.trim();
 
 
 
-        if(nome === ""){
+    if(!nome || !email || !senha){
 
-            alert("Digite o nome da IPEC");
+
+        alert("Preencha nome, email e senha.");
+
+        return;
+
+
+    }
+
+
+
+    let imagemUrl = null;
+
+
+
+    const imagem = igrejaImagem.files[0];
+
+
+
+    if(imagem){
+
+
+        const nomeArquivo = 
+        Date.now()+"-"+imagem.name;
+
+
+
+        const {error:uploadError} = 
+        await supabaseClient
+        .storage
+        .from("igrejas")
+        .upload(nomeArquivo, imagem);
+
+
+
+        if(uploadError){
+
+            console.log(uploadError);
+
+            alert(uploadError.message);
 
             return;
 
@@ -1219,189 +1262,166 @@ if(salvarIgreja){
 
 
 
-        let imagemUrl = null;
+        const url =
+        supabaseClient
+        .storage
+        .from("igrejas")
+        .getPublicUrl(nomeArquivo);
 
 
-        const imagem = igrejaImagem.files[0];
 
+        imagemUrl = url.data.publicUrl;
 
 
-        if(imagem){
+    }
 
 
-            const nomeArquivo = 
-            Date.now()+"-"+imagem.name;
 
 
 
-            const {error:uploadError} = 
-            await supabaseClient
-            .storage
-            .from("igrejas")
-            .upload(nomeArquivo, imagem);
+    // =========================================
+    // 1 - CRIAR LOGIN AUTH
+    // =========================================
 
 
+    const {data:authData, error:erroAuth} =
 
-            if(uploadError){
+    await supabaseClient.auth.signUp({
 
-                console.log(uploadError);
+        email:email,
 
-                alert(uploadError.message);
-
-                return;
-
-            }
-
-
-
-            const url = 
-            supabaseClient
-            .storage
-            .from("igrejas")
-            .getPublicUrl(nomeArquivo);
-
-
-
-            imagemUrl = url.data.publicUrl;
-
-
-        }
-
-
-
-
-
-       // =========================================
-// CRIAR IGREJA
-// =========================================
-
-
-const senha = document
-.getElementById("igrejaSenha")
-.value.trim();
-
-
-
-if(senha === ""){
-
-    alert("Digite uma senha inicial.");
-
-    return;
-
-}
-
-
-
-// Criar igreja primeiro
-
-const {data: novaIgreja, error: erroIgreja} = 
-await supabaseClient
-.from("igrejas")
-.insert({
-
-    nome:nome,
-
-    sigla:sigla,
-
-    cidade:cidade,
-
-    imagem:imagemUrl,
-
-    email:email
-
-})
-.select()
-.single();
-
-
-
-if(erroIgreja){
-
-    console.log("ERRO COMPLETO:", erroIgreja);
-
-    alert(
-        erroIgreja.message + "\n\n" +
-        erroIgreja.details
-    );
-
-    return;
-
-}
-
-
-// Criar usuário da igreja
-
-const {data:usuarioCriado, error:erroUsuario} =
-await supabaseClient.auth.signUp({
-
-    email:email,
-
-    password:senha
-
-});
-
-
-
-if(erroUsuario){
-
-    console.log(erroUsuario);
-
-    alert(erroUsuario.message);
-
-    return;
-
-}
-
-
-
-// Salvar vínculo na tabela usuarios
-
-const {error:erroTabelaUsuario} =
-await supabaseClient
-.from("usuarios")
-.insert({
-
-    auth_id:usuarioCriado.user.id,
-
-    nome:nome,
-
-    email:email,
-
-    tipo_acesso:"igreja",
-
-    igreja_id:novaIgreja.id
-
-});
-
-
-
-if(erroTabelaUsuario){
-
-    console.log(erroTabelaUsuario);
-
-    alert(erroTabelaUsuario.message);
-
-    return;
-
-}
-
-
-
-        fecharModalIgreja();
-
-
-
-        carregarIgrejas();
-
-
+        password:senha
 
     });
 
 
+
+    if(erroAuth){
+
+
+        console.log(erroAuth);
+
+        alert(erroAuth.message);
+
+        return;
+
+
+    }
+
+
+
+
+
+    const authId = authData.user.id;
+
+
+
+
+
+    // =========================================
+    // 2 - CRIAR IGREJA
+    // =========================================
+
+
+    const {data:novaIgreja,error:erroIgreja} =
+
+    await supabaseClient
+    .from("igrejas")
+    .insert({
+
+        nome:nome,
+
+        sigla:sigla,
+
+        cidade:cidade,
+
+        imagem:imagemUrl,
+
+        email:email
+
+    })
+    .select()
+    .single();
+
+
+
+
+
+    if(erroIgreja){
+
+
+        console.log(erroIgreja);
+
+        alert(erroIgreja.message);
+
+        return;
+
+
+    }
+
+
+
+
+
+    // =========================================
+    // 3 - CRIAR USUARIO VINCULADO
+    // =========================================
+
+
+    const {error:erroUsuario} =
+
+    await supabaseClient
+    .from("usuarios")
+    .insert({
+
+        auth_id:authId,
+
+        nome:nome,
+
+        email:email,
+
+        tipo_acesso:"igreja",
+
+        igreja_id:novaIgreja.id
+
+    });
+
+
+
+
+
+    if(erroUsuario){
+
+
+        console.log(erroUsuario);
+
+        alert(erroUsuario.message);
+
+        return;
+
+
+    }
+
+
+
+
+
+    alert("IPEC cadastrada com acesso criado!");
+
+
+
+    fecharModalIgreja();
+
+
+
+    carregarIgrejas();
+
+
+
+});
+
+
 }
-
-
-
 
 
 // =========================================

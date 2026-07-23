@@ -102,6 +102,18 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     console.log("Igreja atual:", igreja);
 
+// =========================================
+// MOSTRAR NOME DA IGREJA
+// =========================================
+
+const nomeIgreja = document.getElementById("nomeIgreja");
+
+
+if(nomeIgreja){
+
+    nomeIgreja.innerHTML = igreja.nome;
+
+}
 
 
 
