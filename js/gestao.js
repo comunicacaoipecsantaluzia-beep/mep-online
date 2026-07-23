@@ -59,9 +59,16 @@ const novoCurso = document.getElementById("novoCurso");
 const btnAtualizar = document.getElementById("btnAtualizar");
 const modalMaterial = document.getElementById("modalMaterial");
 const novoMaterial = document.getElementById("novoMaterial");
+const modalIgreja = document.getElementById("modalIgreja");
+const novaIgreja = document.getElementById("novaIgreja");
+const fecharIgreja = document.getElementById("fecharIgreja");
+const cancelarIgreja = document.getElementById("cancelarIgreja");
 const fecharMaterial = document.getElementById("fecharMaterial");
 const cancelarMaterial = document.getElementById("cancelarMaterial");
 const salvarMaterial = document.getElementById("salvarMaterial");
+const salvarIgreja = document.getElementById("salvarIgreja");
+const igrejaImagem = document.getElementById("igrejaImagem");
+const previewIgreja = document.getElementById("previewIgreja");
 const arquivoMaterial = document.getElementById("arquivoMaterial");
 const previewMaterial = document.getElementById("previewMaterial");
 
@@ -256,7 +263,18 @@ function fecharModalMaterial(){
 
 }
 
+function abrirModalIgreja(){
 
+    modalIgreja.style.display = "flex";
+
+}
+
+
+function fecharModalIgreja(){
+
+    modalIgreja.style.display = "none";
+
+}
 
 
 
@@ -336,6 +354,30 @@ if(fecharMaterial){
 if(cancelarMaterial){
 
     cancelarMaterial.addEventListener("click",fecharModalMaterial);
+
+}
+
+if(novaIgreja){
+
+    novaIgreja.addEventListener("click",()=>{
+
+        abrirModalIgreja();
+
+    });
+
+}
+
+
+if(fecharIgreja){
+
+    fecharIgreja.addEventListener("click",fecharModalIgreja);
+
+}
+
+
+if(cancelarIgreja){
+
+    cancelarIgreja.addEventListener("click",fecharModalIgreja);
 
 }
 
@@ -1129,5 +1171,147 @@ await supabaseClient
 
 });
 
+
+}
+
+// =========================================
+// SALVAR IPEC
+// =========================================
+
+
+if(salvarIgreja){
+
+
+salvarIgreja.addEventListener("click", async()=>{
+
+
+    const nome = document
+    .getElementById("igrejaNome")
+    .value.trim();
+
+
+    const sigla = document
+    .getElementById("igrejaSigla")
+    .value.trim();
+
+
+    const cidade = document
+    .getElementById("igrejaCidade")
+    .value.trim();
+
+
+    const email = document
+    .getElementById("igrejaEmail")
+    .value.trim();
+
+
+
+    if(nome === ""){
+
+        alert("Digite o nome da IPEC");
+
+        return;
+
+    }
+
+
+
+    let imagemUrl = null;
+
+
+    const imagem = igrejaImagem.files[0];
+
+
+
+    if(imagem){
+
+
+        const nomeArquivo =
+        Date.now()+"-"+imagem.name;
+
+
+
+        const {error:uploadError} =
+        await supabaseClient.storage
+
+        .from("igrejas")
+
+        .upload(nomeArquivo, imagem);
+
+
+
+        if(uploadError){
+
+            console.log(uploadError);
+
+            alert(uploadError.message);
+
+            return;
+
+        }
+
+
+
+        const url =
+        supabaseClient.storage
+
+        .from("igrejas")
+
+        .getPublicUrl(nomeArquivo);
+
+
+
+        imagemUrl = url.data.publicUrl;
+
+
+    }
+
+
+
+    const {error} =
+    await supabaseClient
+
+    .from("igrejas")
+
+    .insert({
+
+
+        nome:nome,
+
+        sigla:sigla,
+
+        cidade:cidade,
+
+        imagem:imagemUrl,
+
+        email:email
+
+
+    });
+
+
+
+    if(error){
+
+        console.log(error);
+
+        alert(error.message);
+
+        return;
+
+    }
+
+
+
+    alert("IPEC cadastrada com sucesso!");
+
+
+    fecharModalIgreja();
+
+
+    carregarIgrejas();
+
+
+});
 
 }

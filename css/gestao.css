@@ -1461,3 +1461,225 @@ MODAL MATERIAIS
     display:none;
 
 }
+
+/* =========================================
+   MATERIAIS DO CURSO
+========================================= */
+
+
+#listaMateriais{
+
+    display:flex;
+    flex-direction:column;
+    gap:15px;
+
+}
+
+
+
+.card-material{
+
+    background:#f1f1f1;
+
+    border:1px solid #d8d8d8;
+
+    border-radius:16px;
+
+    padding:18px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:20px;
+
+    transition:.2s;
+
+}
+
+
+
+.card-material:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
+
+}
+
+
+
+
+.material-info{
+
+    flex:1;
+
+}
+
+
+
+.material-info h3{
+
+    margin:0 0 8px;
+
+    color:#111;
+
+    font-size:18px;
+
+    font-weight:700;
+
+}
+
+
+
+.material-info p{
+
+    margin:0 0 10px;
+
+    color:#555;
+
+    font-size:14px;
+
+}
+
+
+
+.material-info span{
+
+    color:#777;
+
+    font-size:13px;
+
+}
+
+
+
+
+
+.btn-baixar{
+
+
+    background:#e50914;
+
+    color:white;
+
+    padding:10px 18px;
+
+    border-radius:10px;
+
+    text-decoration:none;
+
+    font-weight:600;
+
+    transition:.2s;
+
+}
+
+
+
+.btn-baixar:hover{
+
+    background:#b80710;
+
+}
+
+
+
+
+
+/* PREVIEW DO MATERIAL */
+
+
+.preview-material-arquivo{
+
+
+    width:90px;
+
+    height:90px;
+
+    border-radius:12px;
+
+    overflow:hidden;
+
+    background:#ddd;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    flex-shrink:0;
+
+}
+
+
+
+
+.preview-material-arquivo img{
+
+    width:100%;
+
+    height:100%;
+
+    object-fit:cover;
+
+}
+
+
+
+.preview-material-arquivo iframe{
+
+    width:100%;
+
+    height:100%;
+
+    border:none;
+
+}
+
+
+
+.icone-arquivo{
+
+    font-size:40px;
+
+}
+
+.acoes-material{
+
+    display:flex;
+
+    gap:10px;
+
+}
+
+
+
+.btn-excluir-material{
+
+    background:#222;
+
+    color:white;
+
+    border:none;
+
+    padding:10px 18px;
+
+    border-radius:10px;
+
+    cursor:pointer;
+
+    font-weight:600;
+
+}
+
+
+
+.btn-excluir-material:hover{
+
+    background:#000;
+
+}

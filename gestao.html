@@ -404,32 +404,46 @@ Gerenciamento de materiais dos cursos.
 <!-- IGREJAS -->
 
 
+<!-- IGREJAS -->
+
 <section id="igrejas" style="display:none;">
 
-
 <section class="painel">
+
+
+<div class="titulo">
 
 <h2>
 Igrejas
 </h2>
 
 
-<p>
-Igrejas com acesso ao MEP Online.
-</p>
+<button id="novaIgreja">
+
++ Nova IPEC
+
+</button>
+
+
+</div>
+
+
+<div id="listaIgrejas">
+
+
+<div class="curso-vazio">
+
+Nenhuma IPEC cadastrada.
+
+</div>
+
+
+</div>
 
 
 </section>
 
-
 </section>
-
-
-
-
-
-
-
 <!-- RELATÓRIOS -->
 
 
@@ -659,6 +673,163 @@ multiple>
             </div>
 
         </div>
+
+    </div>
+
+</div>
+
+<!-- ========================================= -->
+<!-- MODAL NOVA IPEC -->
+<!-- ========================================= -->
+
+<div id="modalIgreja" class="modal">
+
+    <div class="modal-box">
+
+        <div class="modal-header">
+
+            <h2>Nova IPEC</h2>
+
+            <button id="fecharIgreja">✕</button>
+
+        </div>
+
+
+        <div class="modal-conteudo">
+
+
+            <div class="capa-area">
+
+
+                <div class="preview-capa" id="previewIgreja">
+
+                    <span>
+                        Prévia da imagem
+                    </span>
+
+                </div>
+
+
+                <label class="upload-btn">
+
+                    📁 Selecionar imagem
+
+                    <input
+                    id="igrejaImagem"
+                    type="file"
+                    accept="image/*">
+
+                </label>
+
+
+            </div>
+
+
+
+
+            <div class="form-area">
+
+
+                <div class="campo">
+
+                    <label>
+                    Nome da IPEC
+                    </label>
+
+                    <input
+                    id="igrejaNome"
+                    type="text"
+                    placeholder="Ex: IPEC Lafaiete">
+
+                </div>
+
+
+
+                <div class="campo">
+
+                    <label>
+                    Sigla
+                    </label>
+
+                    <input
+                    id="igrejaSigla"
+                    type="text"
+                    placeholder="Ex: GW">
+
+                </div>
+
+
+
+                <div class="campo">
+
+                    <label>
+                    Cidade
+                    </label>
+
+                    <input
+                    id="igrejaCidade"
+                    type="text">
+
+                </div>
+
+
+
+                <div class="campo">
+
+                    <label>
+                    Email de acesso
+                    </label>
+
+                    <input
+                    id="igrejaEmail"
+                    type="email"
+                    placeholder="login@ipec.com">
+
+                </div>
+
+
+
+                <div class="campo">
+
+                    <label>
+                    Senha inicial
+                    </label>
+
+                    <input
+                    id="igrejaSenha"
+                    type="password">
+
+                </div>
+
+
+
+
+                <div class="acoes">
+
+
+                    <button id="cancelarIgreja">
+
+                        Cancelar
+
+                    </button>
+
+
+
+                    <button id="salvarIgreja">
+
+                        Criar IPEC
+
+                    </button>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
 
     </div>
 
