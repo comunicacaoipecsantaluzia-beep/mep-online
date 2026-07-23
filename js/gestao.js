@@ -42,8 +42,6 @@ const btnDashboard = document.getElementById("btn-dashboard");
 const btnCursos = document.getElementById("btn-cursos");
 const btnIgrejas = document.getElementById("btn-igrejas");
 const btnRelatorios = document.getElementById("btn-relatorios");
-
-
 const dashboard = document.getElementById("dashboard");
 const cursos = document.getElementById("cursos");
 const igrejas = document.getElementById("igrejas");
@@ -52,16 +50,22 @@ const detalheCurso = document.getElementById("detalheCurso");
 console.log("Detalhe curso:", detalheCurso);
 const voltarCursos = document.getElementById("voltarCursos");
 const detalheNome = document.getElementById("detalheNome");
+const detalheCategoria = document.getElementById("detalheCategoria");
 const detalheDescricao = document.getElementById("detalheDescricao");
 const detalheCapa = document.getElementById("detalheCapa");
-
-
 const tituloPagina = document.getElementById("tituloPagina");
-
-
 const irCriarCurso = document.getElementById("irCriarCurso");
 const novoCurso = document.getElementById("novoCurso");
 const btnAtualizar = document.getElementById("btnAtualizar");
+const modalMaterial = document.getElementById("modalMaterial");
+const novoMaterial = document.getElementById("novoMaterial");
+const fecharMaterial = document.getElementById("fecharMaterial");
+const cancelarMaterial = document.getElementById("cancelarMaterial");
+const salvarMaterial = document.getElementById("salvarMaterial");
+const arquivoMaterial = document.getElementById("arquivoMaterial");
+const previewMaterial = document.getElementById("previewMaterial");
+
+let cursoAtual = null;
 
 
 
@@ -239,6 +243,18 @@ function fecharModalCurso(){
 
 }
 
+function abrirModalMaterial(){
+
+    modalMaterial.style.display = "flex";
+
+}
+
+function fecharModalMaterial(){
+
+    modalMaterial.style.display = "none";
+
+}
+
 
 
 
@@ -299,6 +315,30 @@ if(cancelarCurso){
 cancelarCurso.addEventListener("click",fecharModalCurso);
 
 }
+
+// =========================================
+// EVENTOS MODAL MATERIAL
+// =========================================
+
+if(novoMaterial){
+
+    novoMaterial.addEventListener("click",abrirModalMaterial);
+
+}
+
+if(fecharMaterial){
+
+    fecharMaterial.addEventListener("click",fecharModalMaterial);
+
+}
+
+if(cancelarMaterial){
+
+    cancelarMaterial.addEventListener("click",fecharModalMaterial);
+
+}
+
+
 
 
 
@@ -662,52 +702,61 @@ btnAtualizar.addEventListener("click",async()=>{
 // ACESSAR CURSO
 // =========================================
 
-function abrirCurso(id){
+async function abrirCurso(id){
 
-    console.log("Abrindo curso:", id);
+    // Buscar curso
+    const { data, error } = await supabaseClient
+        .from("cursos")
+        .select("*")
+        .eq("id", id)
+        .single();
+
+    if(error){
+
+        console.log(error);
+        alert("Erro ao abrir curso.");
+
+        return;
+
+    }
+
+    // Guarda o curso selecionado
+    cursoAtual = data;
+
+    // Preenche informações
+    detalheNome.textContent = data.nome;
+    detalheCategoria.textContent = data.categoria || "Sem categoria";
+    detalheDescricao.textContent = data.descricao || "Sem descrição.";
+
+    detalheCapa.src = data.capa || "img/logo.png";
+
+    // Esconde lista
+    cursos.style.display = "none";
+
+    // Mostra detalhes
+    detalheCurso.style.display = "block";
+
+    // Atualiza título
+    tituloPagina.innerHTML = data.nome;
+
+    // Carregar materiais
+    carregarMateriais();
 
 }
 
-// =========================================
-// EXCLUIR CURSO
-// =========================================
+async function carregarMateriais(){
 
-async function excluirCurso(id){
+    const lista = document.getElementById("listaMateriais");
 
+    lista.innerHTML = `
 
-const confirmar = confirm(
-"Tem certeza que deseja excluir este curso?"
-);
+        <div class="curso-vazio">
 
+            Em breve os materiais aparecerão aqui.
 
-if(!confirmar) return;
+        </div>
 
-
-
-const {error} = await supabaseClient
-.from("cursos")
-.delete()
-.eq("id",id);
-
-
-
-if(error){
-
-    console.log(error);
-
-    alert("Erro ao excluir curso");
-
-    return;
-
-}
-
-
-
-alert("Curso excluído com sucesso");
-
-
-carregarCursos();
-
+    `;
 
 }
 
@@ -755,6 +804,30 @@ async function excluirCurso(id){
 
     carregarCursos();
 
+
+}
+
+// =========================================
+// VOLTAR PARA LISTA DE CURSOS
+// =========================================
+
+if(voltarCursos){
+
+    voltarCursos.addEventListener("click",()=>{
+
+        detalheCurso.style.display = "none";
+
+        cursos.style.display = "block";
+
+        tituloPagina.innerHTML = "Cursos";
+
+        document.querySelectorAll(".menu button").forEach(btn=>{
+            btn.classList.remove("active");
+        });
+
+        btnCursos.classList.add("active");
+
+    });
 
 }
 

@@ -1071,3 +1071,268 @@ grid-template-columns:1fr;
     background:#000;
 
 }
+
+/* ===========================================
+DETALHE DO CURSO
+=========================================== */
+
+.btn-voltar{
+
+    background:#1f1f1f;
+    color:#fff;
+    border:none;
+    padding:12px 22px;
+    border-radius:10px;
+    cursor:pointer;
+    font-size:14px;
+    font-weight:600;
+    margin-bottom:30px;
+    transition:.2s;
+
+}
+
+.btn-voltar:hover{
+
+    background:#cf202f;
+
+}
+
+.curso-header{
+
+    display:flex;
+    gap:35px;
+    align-items:flex-start;
+    margin-bottom:35px;
+
+}
+
+#detalheCapa{
+
+    width:340px;
+    height:190px;
+
+    object-fit:cover;
+
+    border-radius:16px;
+
+    background:#242424;
+
+    border:1px solid #333;
+
+    box-shadow:0 10px 25px rgba(0,0,0,.25);
+
+}
+
+.curso-info{
+
+    flex:1;
+
+}
+
+#detalheCategoria{
+
+    display:inline-block;
+
+    background:#cf202f;
+
+    color:#fff;
+
+    padding:6px 14px;
+
+    border-radius:999px;
+
+    font-size:13px;
+
+    font-weight:700;
+
+    margin-bottom:18px;
+
+}
+
+#detalheNome{
+
+    font-size:34px;
+
+    color:#1a1a1a;
+
+    margin-bottom:15px;
+
+    font-weight:800;
+
+}
+
+#detalheDescricao{
+
+    color:#555555;
+
+    line-height:1.8;
+
+    font-size:15px;
+
+    max-width:900px;
+
+}
+
+.linha-curso{
+
+    border:none;
+
+    border-top:1px solid #dddddd;
+
+    margin:35px 0;
+
+}
+
+.lista-materiais{
+
+    margin-top:25px;
+
+}
+
+.material-vazio{
+
+    border:2px dashed #d8d8d8;
+
+    border-radius:16px;
+
+    padding:60px;
+
+    text-align:center;
+
+    background:#fafafa;
+
+}
+
+.material-vazio h3{
+
+    color:#222222;
+
+    margin-bottom:10px;
+
+    font-size:22px;
+
+}
+
+.material-vazio p{
+
+    color:#666666;
+
+}
+
+/* ===========================================
+MODAL MATERIAIS
+=========================================== */
+
+.modal-material{
+
+    max-width:700px;
+
+    width:95%;
+
+}
+
+.upload-material{
+
+    width:100%;
+
+    height:55px;
+
+    border:2px dashed #d8d8d8;
+
+    border-radius:12px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    cursor:pointer;
+
+    background:#fafafa;
+
+    color:#444;
+
+    font-weight:600;
+
+    transition:.2s;
+
+}
+
+.upload-material:hover{
+
+    border-color:#cf202f;
+
+    color:#cf202f;
+
+    background:#fff5f6;
+
+}
+
+.preview-material{
+
+    margin-top:20px;
+
+    border:1px solid #e3e3e3;
+
+    border-radius:12px;
+
+    background:#f8f8f8;
+
+    padding:18px;
+
+    min-height:75px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    text-align:center;
+
+    color:#666;
+
+    font-size:14px;
+
+}
+
+.preview-material.arquivo{
+
+    justify-content:flex-start;
+
+    gap:15px;
+
+}
+
+.preview-material .icone{
+
+    font-size:42px;
+
+}
+
+.preview-material .info{
+
+    display:flex;
+
+    flex-direction:column;
+
+}
+
+.preview-material .nome{
+
+    font-weight:700;
+
+    color:#222;
+
+    margin-bottom:5px;
+
+}
+
+.preview-material .dados{
+
+    color:#666;
+
+    font-size:13px;
+
+}

@@ -294,82 +294,81 @@ Nenhum curso cadastrado.
 
 <section id="detalheCurso" style="display:none;">
 
+    <section class="painel">
 
-<section class="painel">
+        <button id="voltarCursos" class="btn-voltar">
 
+            ← Voltar para Cursos
 
-<button id="voltarCursos">
-
-← Voltar
-
-</button>
+        </button>
 
 
+        <div class="curso-header">
 
-<div class="curso-detalhe">
+            <img id="detalheCapa" src="img/logo.png">
+
+            <div class="curso-info">
+
+                <span id="detalheCategoria">
+
+                    Categoria
+
+                </span>
+
+                <h2 id="detalheNome">
+
+                    Nome do Curso
+
+                </h2>
+
+                <p id="detalheDescricao">
+
+                    Descrição do curso.
+
+                </p>
+
+            </div>
+
+        </div>
 
 
-<img id="detalheCapa">
+        <hr class="linha-curso">
 
 
+        <div class="titulo">
 
-<div>
+            <h2>
 
-<h2 id="detalheNome">
+                Materiais do Curso
 
-</h2>
+            </h2>
+
+            <button id="novoMaterial">
+
+                + Adicionar Material
+
+            </button>
+
+        </div>
 
 
-<p id="detalheDescricao">
+       <div id="listaMateriais" class="lista-materiais">
 
-</p>
+    <div class="material-vazio">
 
+        <h3>Nenhum material enviado</h3>
+
+        <p>
+            Clique em <strong>+ Adicionar Material</strong> para enviar arquivos deste curso.
+        </p>
+
+    </div>
 
 </div>
 
-
-</div>
-
-
-
-
-<div class="titulo">
-
-<h2>
-Materiais
-</h2>
-
-
-<button id="novoMaterial">
-
-+ Adicionar Material
-
-</button>
-
-
-</div>
-
-
-
-<div id="listaMateriais">
-
-
-<div class="curso-vazio">
-
-Nenhum material cadastrado.
-
-</div>
-
-
-</div>
-
-
+    </section>
 
 </section>
-
-
-</section>
-
 
 
 
@@ -577,6 +576,93 @@ Controle de acessos e downloads.
 
 </div>
 
+<!-- ========================================= -->
+<!-- MODAL MATERIAL -->
+<!-- ========================================= -->
+
+<div id="modalMaterial" class="modal">
+
+    <div class="modal-box modal-material">
+
+        <div class="modal-header">
+
+            <h2>Novo Material</h2>
+
+            <button id="fecharMaterial">✕</button>
+
+        </div>
+
+        <div class="modal-conteudo">
+
+            <div class="form-area">
+
+                <div class="campo">
+
+                    <label>Nome do Material</label>
+
+                    <input
+                        type="text"
+                        id="materialNome"
+                        placeholder="Ex.: Apostila Aula 01">
+
+                </div>
+
+                <div class="campo">
+
+                    <label>Descrição</label>
+
+                    <textarea
+                        id="materialDescricao"
+                        placeholder="Descrição opcional"></textarea>
+
+                </div>
+
+                <div class="campo">
+
+                    <label>Arquivo</label>
+
+                    <label class="upload-material">
+
+                        Selecionar Arquivo
+
+                        <input
+                            type="file"
+                            id="arquivoMaterial"
+                            hidden>
+
+                    </label>
+
+                </div>
+
+                <div id="previewMaterial" class="preview-material">
+
+                    Nenhum arquivo selecionado.
+
+                </div>
+
+                <div class="acoes">
+
+                    <button id="cancelarMaterial">
+
+                        Cancelar
+
+                    </button>
+
+                    <button id="salvarMaterial">
+
+                        Salvar Material
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
 
 </main>
 
