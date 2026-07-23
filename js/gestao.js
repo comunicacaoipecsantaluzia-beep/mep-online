@@ -66,6 +66,7 @@ const arquivoMaterial = document.getElementById("arquivoMaterial");
 const previewMaterial = document.getElementById("previewMaterial");
 
 let cursoAtual = null;
+let arquivosSelecionados = [];
 
 
 
@@ -346,46 +347,73 @@ if(arquivoMaterial){
 
     arquivoMaterial.addEventListener("change",(e)=>{
 
-        const arquivo = e.target.files[0];
+        const arquivos = Array.from(e.target.files);
 
-        if(!arquivo){
+        arquivos.forEach(arquivo=>{
 
-            previewMaterial.innerHTML = "Nenhum arquivo selecionado.";
+            arquivosSelecionados.push(arquivo);
 
-            return;
+        });
 
-        }
+        atualizarPreviewMateriais();
 
-        const tamanho = (arquivo.size / 1024 / 1024).toFixed(2);
-
-        previewMaterial.innerHTML = `
-
-            <div class="icone">📄</div>
-
-            <div class="info">
-
-                <div class="nome">
-
-                    ${arquivo.name}
-
-                </div>
-
-                <div class="dados">
-
-                    ${(arquivo.type || "Arquivo")} • ${tamanho} MB
-
-                </div>
-
-            </div>
-
-        `;
-
-        previewMaterial.classList.add("arquivo");
+        arquivoMaterial.value = "";
 
     });
 
 }
 
+function atualizarPreviewMateriais(){
+
+    previewMaterial.innerHTML = "";
+
+    if(arquivosSelecionados.length === 0){
+
+        previewMaterial.innerHTML = "Nenhum arquivo selecionado.";
+
+        return;
+
+    }
+
+    arquivosSelecionados.forEach((arquivo,index)=>{
+
+        const tamanho = (arquivo.size / 1024 / 1024).toFixed(2);
+
+        previewMaterial.innerHTML += `
+
+        <div class="arquivo-item">
+
+            <div>
+
+                <strong>${arquivo.name}</strong><br>
+
+                <small>${tamanho} MB</small>
+
+            </div>
+
+            <button
+            class="remover-arquivo"
+            onclick="removerArquivo(${index})">
+
+                ✕
+
+            </button>
+
+        </div>
+
+        `;
+
+    });
+
+}
+
+function removerArquivo(index){
+
+    arquivosSelecionados.splice(index,1);
+
+    atualizarPreviewMateriais();
+
+}
 
 
 
