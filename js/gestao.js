@@ -1793,22 +1793,7 @@ async function excluirIgreja(id){
     );
 
 
-    if(!confirmar) return;
-
-
-
-    const {error} = await supabaseClient
-    .from("igrejas")
-    .delete()
-    .eq("id", id);
-
-
-
-    if(error){
-
-        console.log(error);
-
-        alert(error.message);
+    if(!confirmar){
 
         return;
 
@@ -1816,11 +1801,94 @@ async function excluirIgreja(id){
 
 
 
+    // =========================================
+    // REMOVE CURSOS LIBERADOS
+    // =========================================
+
+    const {error: erroCursos} =
+    await supabaseClient
+
+    .from("igreja_cursos")
+
+    .delete()
+
+    .eq("igreja_id", id);
+
+
+
+    if(erroCursos){
+
+        console.log(erroCursos);
+
+    }
+
+
+
+
+
+    // =========================================
+    // REMOVE USUÁRIOS DA TABELA usuarios
+    // =========================================
+
+    const {error: erroUsuarios} =
+    await supabaseClient
+
+    .from("usuarios")
+
+    .delete()
+
+    .eq("igreja_id", id);
+
+
+
+    if(erroUsuarios){
+
+        console.log(erroUsuarios);
+
+        alert("Erro ao excluir usuários da igreja.");
+
+        return;
+
+    }
+
+
+
+
+
+    // =========================================
+    // REMOVE A IGREJA
+    // =========================================
+
+    const {error: erroIgreja} =
+    await supabaseClient
+
+    .from("igrejas")
+
+    .delete()
+
+    .eq("id", id);
+
+
+
+    if(erroIgreja){
+
+        console.log(erroIgreja);
+
+        alert("Erro ao excluir igreja.");
+
+        return;
+
+    }
+
+
+
+
+
     alert("Igreja excluída com sucesso!");
 
 
-    carregarIgrejas();
 
+    carregarIgrejas();
 
 }
 
