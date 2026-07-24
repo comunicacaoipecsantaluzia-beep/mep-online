@@ -1093,25 +1093,23 @@ async function carregarMateriais(){
 
             <div class="material-acoes">
 
+    <a
+    href="${material.arquivo}"
+    target="_blank">
 
+        Abrir arquivo
 
-                <a 
-                href="${material.arquivo}" 
-                target="_blank">
+    </a>
 
+    <button
+    class="btn-excluir-material"
+    onclick="excluirMaterial('${material.id}')">
 
-                    Abrir arquivo
+        Excluir
 
+    </button>
 
-                </a>
-
-
-
-            </div>
-
-
-
-        </div>
+</div>
 
 
 
@@ -2067,5 +2065,100 @@ if(salvarLiberacoes){
     });
 
 
+
+}
+
+// =========================================
+// EXCLUIR MATERIAL
+// =========================================
+
+async function excluirMaterial(id){
+
+
+    const confirmar = confirm(
+        "Deseja realmente excluir este material?"
+    );
+
+
+    if(!confirmar){
+
+        return;
+
+    }
+
+
+
+    // Buscar material
+
+
+    const {data: material, error} = await supabaseClient
+
+    .from("materiais")
+
+    .select("*")
+
+    .eq("id", id)
+
+    .single();
+
+
+
+    if(error){
+
+        console.log(error);
+
+        alert("Erro ao localizar material.");
+
+        return;
+
+    }
+
+
+
+    // Remove arquivo do Storage
+
+
+    if(material.arquivo){
+
+        const nomeArquivo = material.arquivo.split("/").pop();
+
+        await supabaseClient
+
+        .storage
+
+        .from("materiais")
+
+        .remove([nomeArquivo]);
+
+    }
+
+
+
+    // Remove registro do banco
+
+
+    const {error: erroExcluir} = await supabaseClient
+
+    .from("materiais")
+
+    .delete()
+
+    .eq("id", id);
+
+
+
+    if(erroExcluir){
+
+        console.log(erroExcluir);
+
+        alert("Erro ao excluir material.");
+
+        return;
+
+    }
+
+
+
+    carregarMateriais();
 
 }
