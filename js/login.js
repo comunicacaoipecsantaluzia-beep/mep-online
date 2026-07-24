@@ -90,7 +90,7 @@ btnLogin.addEventListener("click", async () => {
         case "gestao":
 
 
-            window.location.href = "gestao.html";
+            window.location.replace("gestao.html");
 
 
         break;
@@ -101,7 +101,7 @@ btnLogin.addEventListener("click", async () => {
         case "igreja":
 
 
-            window.location.href = "portal.html";
+            window.location.replace("portal.html");
 
 
         break;

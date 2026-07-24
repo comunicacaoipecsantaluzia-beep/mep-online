@@ -3,8 +3,11 @@
 // =========================================
 
 
-document.addEventListener("DOMContentLoaded", async () => {
+// =========================================
+// VERIFICA LOGIN IGREJA
+// =========================================
 
+document.addEventListener("DOMContentLoaded", async () => {
 
 
     // Verifica usuário logado
@@ -15,31 +18,26 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     if(!data.user){
 
-
-        window.location.href = "login.html?tipo=igreja";
+        window.location.replace("login.html");
 
         return;
-
 
     }
 
 
 
 
-
     // Busca usuário no sistema
-
 
     const { data: usuario, error } = await supabaseClient
 
-    .from("usuarios")
+        .from("usuarios")
 
-    .select("*")
+        .select("*")
 
-    .eq("auth_id", data.user.id)
+        .eq("auth_id", data.user.id)
 
-    .single();
-
+        .single();
 
 
 
@@ -47,26 +45,18 @@ document.addEventListener("DOMContentLoaded", async () => {
     if(error || !usuario || usuario.tipo_acesso !== "igreja"){
 
 
-
         await supabaseClient.auth.signOut();
 
-
-
-        window.location.href = "login.html?tipo=igreja";
-
+        window.location.replace("login.html");
 
         return;
-
 
     }
 
 
 
 
-
     console.log("Usuário logado:", usuario);
-
-
 
 
 
