@@ -818,9 +818,6 @@ btnAtualizar.addEventListener("click",async()=>{
     await carregarCursos();
 
 
-    await carregarDashboard();
-
-
 });
 
 
@@ -1680,16 +1677,12 @@ salvarIgreja.addEventListener("click", async()=>{
 
 async function carregarIgrejas(){
 
-
     if(!listaIgrejas) return;
-
-
 
     const { data, error } = await supabaseClient
     .from("igrejas")
     .select("*")
     .order("criado_em", { ascending:false });
-
 
 
     if(error){
@@ -1711,13 +1704,10 @@ async function carregarIgrejas(){
     }
 
 
-
     listaIgrejas.innerHTML = "";
 
 
-
     if(!data || data.length === 0){
-
 
         listaIgrejas.innerHTML = `
 
@@ -1729,38 +1719,40 @@ async function carregarIgrejas(){
 
         `;
 
-
         return;
 
     }
 
 
-
     data.forEach(igreja=>{
 
 
-       listaIgrejas.innerHTML += `
-
+        listaIgrejas.innerHTML += `
 
 <div class="card-igreja">
 
 
+    <img
+        class="card-igreja-img"
+        src="${igreja.imagem || "img/logo.png"}"
+        alt="${igreja.nome}">
+
+
     <h3>
+
         ${igreja.nome}
+
     </h3>
 
 
     <p>
+
         ${igreja.cidade || "Cidade não informada"}
+
     </p>
 
 
-    <span>
-        ${status}
-    </span>
-
-
-    <button 
+    <button
     class="btn-excluir-igreja"
     onclick="excluirIgreja('${igreja.id}')">
 
@@ -1771,13 +1763,9 @@ async function carregarIgrejas(){
 
 </div>
 
-
 `;
 
-
     });
-
-
 
 }
 
