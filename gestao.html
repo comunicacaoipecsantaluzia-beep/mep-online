@@ -245,101 +245,209 @@ Nenhum curso cadastrado.
 
 <section id="detalheCurso" style="display:none;">
 
-    <section class="painel">
 
-        <button id="voltarCursos" class="btn-voltar">
-
-            ← Voltar para Cursos
-
-        </button>
+<section class="painel">
 
 
-        <div class="curso-header">
 
-            <img id="detalheCapa" src="img/logo.png">
+<button id="voltarCursos" class="btn-voltar">
 
-            <div class="curso-info">
+    ← Voltar para Cursos
 
-                <span id="detalheCategoria">
-
-                    Categoria
-
-                </span>
-
-                <h2 id="detalheNome">
-
-                    Nome do Curso
-
-                </h2>
-
-                <p id="detalheDescricao">
-
-                    Descrição do curso.
-
-                </p>
-
-            </div>
-
-        </div>
+</button>
 
 
-        <hr class="linha-curso">
 
 
-        <div class="titulo">
+<!-- CABEÇALHO DO CURSO -->
 
-            <h2>
-
-                Materiais do Curso
-
-            </h2>
-
-            <button id="novoMaterial">
-
-                + Adicionar Material
-
-            </button>
-
-        </div>
+<div class="curso-header">
 
 
-       <div id="listaMateriais" class="lista-materiais">
+    <img id="detalheCapa" src="img/logo.png">
 
-    <div class="material-vazio">
 
-        <h3>Nenhum material enviado</h3>
 
-        <p>
-            Clique em <strong>+ Adicionar Material</strong> para enviar arquivos deste curso.
+    <div class="curso-info">
+
+
+        <span id="detalheCategoria">
+
+            Categoria
+
+        </span>
+
+
+
+        <h2 id="detalheNome">
+
+            Nome do Curso
+
+        </h2>
+
+
+
+        <p id="detalheDescricao">
+
+            Descrição do curso.
+
         </p>
+
+
 
     </div>
 
+
 </div>
 
-    </section>
 
-</section>
+
+
+
+<hr class="linha-curso">
+
+
+
+
+
+
+<!-- LIBERAÇÃO DE IGREJAS -->
+
+<div class="liberar-igrejas">
+
+
+
+    <div class="titulo">
+
+
+        <h2>
+
+            Liberar curso para igrejas
+
+        </h2>
+
+
+    </div>
+
+
+
+
+    <p>
+
+        Selecione quais igrejas poderão acessar este curso:
+
+    </p>
+
+
+
+
+
+    <div 
+    id="listaIgrejasCurso"
+    class="lista-igrejas-curso">
+
+
+        Carregando igrejas...
+
+
+    </div>
+
+
+
+
+
+    <button 
+    id="salvarLiberacoes"
+    class="btn-salvar">
+
+
+        Salvar liberações
+
+
+    </button>
+
+
+
+
+</div>
+
+
+
+
+
+
+<hr class="linha-curso">
+
+
 
 
 
 
 <!-- MATERIAIS -->
 
-
-<section id="materiais" style="display:none;">
-
-
-<section class="painel">
-
-<h2>
-Materiais
-</h2>
+<div class="titulo">
 
 
-<p>
-Gerenciamento de materiais dos cursos.
-</p>
+    <h2>
+
+        Materiais do Curso
+
+    </h2>
+
+
+
+    <button id="novoMaterial">
+
+
+        + Adicionar Material
+
+
+    </button>
+
+
+
+</div>
+
+
+
+
+
+
+<div id="listaMateriais" class="lista-materiais">
+
+
+
+    <div class="material-vazio">
+
+
+        <h3>
+
+            Nenhum material enviado
+
+        </h3>
+
+
+
+        <p>
+
+            Clique em 
+            <strong>
+            + Adicionar Material
+            </strong>
+            para enviar arquivos deste curso.
+
+        </p>
+
+
+
+    </div>
+
+
+
+</div>
+
+
+
 
 
 </section>

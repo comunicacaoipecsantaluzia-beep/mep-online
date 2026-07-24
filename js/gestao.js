@@ -54,6 +54,8 @@ const voltarCursos = document.getElementById("voltarCursos");
 const detalheNome = document.getElementById("detalheNome");
 const detalheCategoria = document.getElementById("detalheCategoria");
 const detalheDescricao = document.getElementById("detalheDescricao");
+const listaIgrejasCurso = document.getElementById("listaIgrejasCurso");
+const salvarLiberacoes = document.getElementById("salvarLiberacoes");
 const detalheCapa = document.getElementById("detalheCapa");
 const tituloPagina = document.getElementById("tituloPagina");
 const irCriarCurso = document.getElementById("irCriarCurso");
@@ -823,62 +825,305 @@ btnAtualizar.addEventListener("click",async()=>{
 
 async function abrirCurso(id){
 
+
     // Buscar curso
+
     const { data, error } = await supabaseClient
-        .from("cursos")
-        .select("*")
-        .eq("id", id)
-        .single();
+
+    .from("cursos")
+
+    .select("*")
+
+    .eq("id", id)
+
+    .single();
+
+
 
     if(error){
 
+
         console.log(error);
+
         alert("Erro ao abrir curso.");
+
+        return;
+
+
+    }
+
+
+
+
+    // Guarda curso selecionado
+
+    cursoAtual = data;
+
+
+
+
+
+    // Preenche informações
+
+    detalheNome.textContent = data.nome;
+
+    detalheCategoria.textContent = data.categoria || "Sem categoria";
+
+    detalheDescricao.textContent = data.descricao || "Sem descrição.";
+
+    detalheCapa.src = data.capa || "img/logo.png";
+
+
+
+
+
+    // Esconde lista de cursos
+
+    cursos.style.display = "none";
+
+
+
+
+
+    // Mostra detalhe
+
+    detalheCurso.style.display = "block";
+
+
+
+
+
+    // Atualiza título
+
+    tituloPagina.innerHTML = data.nome;
+
+
+
+
+
+    // Carregar materiais
+
+    carregarMateriais();
+
+
+
+
+
+    // Carregar igrejas liberadas
+
+    carregarIgrejasCurso();
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// =========================================
+// CARREGAR MATERIAIS DO CURSO
+// =========================================
+
+
+async function carregarMateriais(){
+
+
+
+    const lista = document.getElementById("listaMateriais");
+
+
+
+    if(!lista || !cursoAtual){
 
         return;
 
     }
 
-    // Guarda o curso selecionado
-    cursoAtual = data;
 
-    // Preenche informações
-    detalheNome.textContent = data.nome;
-    detalheCategoria.textContent = data.categoria || "Sem categoria";
-    detalheDescricao.textContent = data.descricao || "Sem descrição.";
 
-    detalheCapa.src = data.capa || "img/logo.png";
 
-    // Esconde lista
-    cursos.style.display = "none";
 
-    // Mostra detalhes
-    detalheCurso.style.display = "block";
+    const {data: materiais, error} = await supabaseClient
 
-    // Atualiza título
-    tituloPagina.innerHTML = data.nome;
+    .from("materiais")
 
-    // Carregar materiais
-    carregarMateriais();
+    .select("*")
 
-}
+    .eq("curso_id", cursoAtual.id)
 
-async function carregarMateriais(){
+    .order("criado_em", {ascending:false});
 
-    const lista = document.getElementById("listaMateriais");
 
-    lista.innerHTML = `
+
+
+
+
+    if(error){
+
+
+
+        console.log("Erro ao buscar materiais:", error);
+
+
+
+        lista.innerHTML = `
 
         <div class="curso-vazio">
 
-            Em breve os materiais aparecerão aqui.
+            Erro ao carregar materiais.
 
         </div>
 
-    `;
+        `;
+
+
+
+        return;
+
+
+    }
+
+
+
+
+
+
+
+    if(!materiais || materiais.length === 0){
+
+
+
+        lista.innerHTML = `
+
+        <div class="curso-vazio">
+
+
+            <h3>
+
+            Nenhum material enviado
+
+            </h3>
+
+
+            <p>
+
+            Clique em + Adicionar Material para enviar arquivos deste curso.
+
+            </p>
+
+
+        </div>
+
+        `;
+
+
+
+        return;
+
+
+    }
+
+
+
+
+
+
+
+
+    lista.innerHTML = "";
+
+
+
+
+
+
+
+    materiais.forEach(material => {
+
+
+
+        lista.innerHTML += `
+
+
+        <div class="material-card">
+
+
+
+            <div class="material-info">
+
+
+
+                <h3>
+
+                    ${material.nome}
+
+                </h3>
+
+
+
+                <p>
+
+                    ${material.descricao || "Material do curso"}
+
+                </p>
+
+
+
+                <small>
+
+                    ${material.tipo || ""}
+
+                    ${material.tamanho || ""}
+
+                </small>
+
+
+
+            </div>
+
+
+
+
+
+
+            <div class="material-acoes">
+
+
+
+                <a 
+                href="${material.arquivo}" 
+                target="_blank">
+
+
+                    Abrir arquivo
+
+
+                </a>
+
+
+
+            </div>
+
+
+
+        </div>
+
+
+
+        `;
+
+
+
+    });
+
+
 
 }
-
 // =========================================
 // EXCLUIR CURSO
 // =========================================
@@ -1570,6 +1815,257 @@ async function excluirIgreja(id){
 
 
     carregarIgrejas();
+
+
+}
+
+// =========================================
+// CARREGAR IGREJAS DO CURSO
+// =========================================
+
+
+async function carregarIgrejasCurso(){
+
+
+    if(!listaIgrejasCurso || !cursoAtual){
+
+        return;
+
+    }
+
+
+
+    const {data: igrejas, error} = await supabaseClient
+    .from("igrejas")
+    .select("id,nome")
+    .order("nome");
+
+
+
+    if(error){
+
+        console.log("Erro ao buscar igrejas:", error);
+
+        return;
+
+    }
+
+
+
+
+
+    const {data: liberadas, error: erroLiberadas} = await supabaseClient
+    .from("igreja_cursos")
+    .select("igreja_id")
+    .eq("curso_id", cursoAtual.id);
+
+
+
+    if(erroLiberadas){
+
+        console.log("Erro ao buscar liberações:", erroLiberadas);
+
+    }
+
+
+
+
+
+    const idsLiberados = liberadas
+    ? liberadas.map(item => item.igreja_id)
+    : [];
+
+
+
+
+
+    listaIgrejasCurso.innerHTML = "";
+
+
+
+
+
+    igrejas.forEach(igreja=>{
+
+
+
+        const marcado = idsLiberados.includes(igreja.id)
+        ? "checked"
+        : "";
+
+
+
+        listaIgrejasCurso.innerHTML += `
+
+
+            <label class="igreja-opcao">
+
+
+                <input 
+                type="checkbox"
+                class="checkIgrejaCurso"
+                value="${igreja.id}"
+                ${marcado}>
+
+
+                ${igreja.nome}
+
+
+            </label>
+
+
+        `;
+
+
+
+    });
+
+
+
+}
+
+// =========================================
+// SALVAR LIBERAÇÕES DO CURSO PARA IGREJAS
+// =========================================
+
+
+if(salvarLiberacoes){
+
+
+    salvarLiberacoes.addEventListener("click", async()=>{
+
+
+        if(!cursoAtual){
+
+            alert("Nenhum curso selecionado.");
+
+            return;
+
+        }
+
+
+
+
+        const selecionadas = 
+        document.querySelectorAll(".checkIgrejaCurso:checked");
+
+
+
+        const igrejasSelecionadas = 
+        Array.from(selecionadas)
+        .map(item => item.value);
+
+
+
+
+
+        // Remove liberações antigas
+
+        const {error: erroDelete} = await supabaseClient
+
+        .from("igreja_cursos")
+
+        .delete()
+
+        .eq("curso_id", cursoAtual.id);
+
+
+
+
+
+        if(erroDelete){
+
+            console.log(erroDelete);
+
+            alert("Erro ao limpar liberações.");
+
+            return;
+
+        }
+
+
+
+
+
+
+        // Se não marcou nenhuma igreja, apenas remove tudo
+
+        if(igrejasSelecionadas.length === 0){
+
+
+            alert("Nenhuma igreja possui acesso a este curso.");
+
+            return;
+
+
+        }
+
+
+
+
+
+
+
+        // Criar novas liberações
+
+
+        const registros = igrejasSelecionadas.map(idIgreja => ({
+
+
+            curso_id: cursoAtual.id,
+
+            igreja_id: idIgreja,
+
+            ativo:true
+
+
+        }));
+
+
+
+
+
+
+
+        const {error: erroInsert} = await supabaseClient
+
+        .from("igreja_cursos")
+
+        .insert(registros);
+
+
+
+
+
+
+        if(erroInsert){
+
+    console.log("ERRO COMPLETO:", erroInsert);
+
+    alert(
+        erroInsert.message + "\n\n" +
+        erroInsert.details
+    );
+
+    return;
+
+}
+
+
+
+
+
+
+        alert("Liberações salvas com sucesso!");
+
+
+
+        carregarIgrejasCurso();
+
+
+
+    });
+
 
 
 }
